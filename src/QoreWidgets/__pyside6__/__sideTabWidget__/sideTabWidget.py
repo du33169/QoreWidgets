@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from PySide6.QtWidgets import QTabWidget, QTabBar, QPushButton,QWidget,QStylePainter,QStyleOptionTab,QStyleOptionButton,QStyle
 from PySide6.QtCore import QRect,QPropertyAnimation,QEasingCurve,QParallelAnimationGroup,QSize,Qt,Signal,Slot
 from PySide6.QtGui import QPainter, QIcon ,QPaintEvent
-from . import rc
+from ... import rc
 
 @dataclass
 class SideTabConfig:
