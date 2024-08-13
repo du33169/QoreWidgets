@@ -1,6 +1,7 @@
 
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget
+from PySide6.QtGui import QIcon
 # from qdarktheme import load_stylesheet
 
 try:
@@ -25,6 +26,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.sidebar_example()
+        self.titlebar_example()
 
     def sidebar_example(self):
         def update_foldState(fold: bool):
@@ -35,6 +37,9 @@ class MainWindow(QMainWindow):
 
         self.ui.btn_expand.clicked.connect(lambda: self.ui.sidetab.set_foldState(False))
         self.ui.btn_fold.clicked.connect(lambda: self.ui.sidetab.set_foldState(True))
+
+    def titlebar_example(self):
+        self.ui.label_appIcon.setPixmap(QIcon(":/icons/account").pixmap(20))
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)

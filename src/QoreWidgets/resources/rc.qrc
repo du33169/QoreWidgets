@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/icons">
         <file alias="menu">icons/menu.svg</file>
+        <file alias="close">icons/close.svg</file>
+        <file alias="minimize">icons/minimize.svg</file>
+        <file alias="maximize">icons/maximize.svg</file>
+        <file alias="restore">icons/restore.svg</file>
     </qresource>
 </RCC>

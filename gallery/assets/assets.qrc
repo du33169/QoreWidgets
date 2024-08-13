@@ -4,5 +4,6 @@
         <file alias="menu">icons/menu.svg</file>
         <file alias="info">icons/info.svg</file>
         <file alias="settings">icons/settings.svg</file>
+        <file alias="account">icons/account.svg</file>
     </qresource>
 </RCC>

@@ -19,8 +19,8 @@ except ImportError:
 
 if qt_backend == QtBackend.PySide6:
 	from .__pyside6__.__sideTabWidget__.sideTabWidget import SideTabWidget
-
-from .sideTabWidget import SideTabWidgetelif qt_backend == QtBackend.PyQt5:
+	from .__pyside6__.__immersiveTitleBar__.immersiveTitleBar import ImmersiveTitleBar
+elif qt_backend == QtBackend.PyQt5:
 	#TODO
 	raise NotImplementedError("PyQt5 backend is not implemented yet.")
 else:
