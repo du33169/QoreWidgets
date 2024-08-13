@@ -2,7 +2,7 @@
 [project]
 name="QoreWidgets"
 version="0.1.0"
-description = "Yet another collection of those core widgets for a modern application."
+description = "Yet another collection of those core widgets for a modern qt application."
 
 authors = [
     { name="Dylan", email="du33169@gmail.com" }

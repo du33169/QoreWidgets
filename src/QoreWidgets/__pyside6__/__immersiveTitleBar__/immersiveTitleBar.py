@@ -50,6 +50,14 @@ class ImmersiveTitleBar(QWidget):
 		self.dragging=False
 		self.init_btns()
 
+	def on_maximize_clicked(self):
+		win=self.window()
+		if win.isMaximized():
+			win.showNormal()
+			self.maximizeButton.setIcon(self.ftbconfig.MAXIMIZE_BUTTON_ICON)
+		else:
+			win.showMaximized()
+			self.maximizeButton.setIcon(self.ftbconfig.RESTORE_BUTTON_ICON)
 	def init_btns(self):
 		# create buttons
 		self.closeButton = ImmersiveTitleBarButton(self, self.ftbconfig, 0)
@@ -64,16 +72,10 @@ class ImmersiveTitleBar(QWidget):
 
 		# bind button to window events
 		self.closeButton.clicked.connect(self.window().close)
-		def on_maximize_clicked():
-			win=self.window()
-			if win.isMaximized():
-				win.showNormal()
-				self.maximizeButton.setIcon(self.ftbconfig.MAXIMIZE_BUTTON_ICON)
-			else:
-				win.showMaximized()
-				self.maximizeButton.setIcon(self.ftbconfig.RESTORE_BUTTON_ICON)
-		self.maximizeButton.clicked.connect(on_maximize_clicked)
+		
+		self.maximizeButton.clicked.connect(self.on_maximize_clicked)
 		self.minimizeButton.clicked.connect(self.window().showMinimized)
+
 	#[end init_btns]
  
 	def paintEvent(self, event: QPaintEvent) -> None:
@@ -87,6 +89,12 @@ class ImmersiveTitleBar(QWidget):
 			self.layout().setGeometry(QRect(0, 0, available_width, self.height())) 
 		return super().paintEvent(event)
 	
+	# double click to maximize window
+	def mouseDoubleClickEvent(self, event: QMouseEvent) -> None:
+		if event.button() == Qt.MouseButton.LeftButton:
+			self.on_maximize_clicked()
+		return super().mouseDoubleClickEvent(event)
+
 	# handle window drag
 	def mousePressEvent(self, event: QMouseEvent) -> None:
 		# check event target
