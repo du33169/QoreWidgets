@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-from PySide6.QtGui import QMouseEvent, QColor,QResizeEvent
+from PySide6.QtGui import QMouseEvent, QColor,QResizeEvent,QWindowStateChangeEvent
 from PySide6.QtWidgets import QMainWindow, QWidget,QGraphicsDropShadowEffect
 from PySide6.QtCore import Qt,QPoint
 
@@ -144,6 +144,13 @@ class FramelessWindow(QMainWindow):
             grip.show()
             grip.follow_geometry()
 
+    def changeEvent(self, event: QWindowStateChangeEvent) -> None:
+        if event.type() == QWindowStateChangeEvent.Type.WindowStateChange:
+            if self.isMaximized():
+                [grip.hide() for grip in self.pos2grip.values()]
+            else:
+                [grip.show() for grip in self.pos2grip.values()]
+        return super().changeEvent(event)
     def resizeEvent(self, event: QResizeEvent) -> None:
         super().resizeEvent(event)
         [grip.follow_geometry() for grip in self.pos2grip.values()]

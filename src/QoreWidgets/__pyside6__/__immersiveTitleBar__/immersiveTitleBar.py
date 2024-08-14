@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget,QPushButton
-from PySide6.QtGui import QIcon, QPaintEvent,QMouseEvent
+from PySide6.QtGui import QIcon, QPaintEvent,QMouseEvent,QWindowStateChangeEvent
 from PySide6.QtCore import QSize,Qt,QRect
 from dataclasses import dataclass
 
@@ -50,14 +50,21 @@ class ImmersiveTitleBar(QWidget):
 		self.dragging=False
 		self.init_btns()
 
+	def maximize_icon_toggle(self, event: QWindowStateChangeEvent) -> None:
+		if event.type() == QWindowStateChangeEvent.Type.WindowStateChange:
+			win=self.window()
+			if win.isMaximized():
+				self.maximizeButton.setIcon(self.ftbconfig.RESTORE_BUTTON_ICON)
+			else:
+				self.maximizeButton.setIcon(self.ftbconfig.MAXIMIZE_BUTTON_ICON)
+		
 	def on_maximize_clicked(self):
 		win=self.window()
 		if win.isMaximized():
 			win.showNormal()
-			self.maximizeButton.setIcon(self.ftbconfig.MAXIMIZE_BUTTON_ICON)
 		else:
 			win.showMaximized()
-			self.maximizeButton.setIcon(self.ftbconfig.RESTORE_BUTTON_ICON)
+
 	def init_btns(self):
 		# create buttons
 		self.closeButton = ImmersiveTitleBarButton(self, self.ftbconfig, 0)
@@ -75,7 +82,12 @@ class ImmersiveTitleBar(QWidget):
 		
 		self.maximizeButton.clicked.connect(self.on_maximize_clicked)
 		self.minimizeButton.clicked.connect(self.window().showMinimized)
-
+		
+		old_hook=self.window().changeEvent
+		def window_state_changed_wrapper(event: QWindowStateChangeEvent) -> None:
+			old_hook(event)
+			self.maximize_icon_toggle(event)
+		self.window().changeEvent=window_state_changed_wrapper
 	#[end init_btns]
  
 	def paintEvent(self, event: QPaintEvent) -> None:
@@ -110,6 +122,19 @@ class ImmersiveTitleBar(QWidget):
 	def mouseMoveEvent(self, event: QMouseEvent) -> None:
 		if event.buttons() == Qt.MouseButton.LeftButton and self.dragging:
 			win=self.window()
+			if win.isMaximized(): # handle drag window off from maximized state
+				leftDistance=event.globalX()
+				screenWidth=win.screen().geometry().width()
+				winNormalWidth=win.normalGeometry().width()
+				rightDistance=screenWidth-leftDistance
+
+				win.showNormal() # ** must be place after get normal width and before move **
+
+				if leftDistance<rightDistance:
+					win.move(max(0,event.globalX()-leftDistance),win.y())
+				else:
+					win.move(screenWidth-winNormalWidth,win.y())
+				
 			win.move(win.pos() + event.globalPos() - self.dragPos)
 			self.dragPos = event.globalPos()
 		return super().mouseMoveEvent(event)
