@@ -7,7 +7,7 @@ from dataclasses import dataclass
 class ImmersiveTitleBarConfig:
 	#title bar config
 	HEIGHT: int = 32
-
+	FLAT_BUTTON: bool = False
 	#button config
 	BUTTON_SIZE: int = 24
 	BUTTON_ICON_SIZE: int = 20
@@ -33,7 +33,7 @@ class ImmersiveTitleBarButton(QPushButton):
 		super().__init__(parent)
 		self.setIconSize(QSize(ftbconfig.BUTTON_ICON_SIZE, ftbconfig.BUTTON_ICON_SIZE))
 		self.setFixedSize(ftbconfig.BUTTON_SIZE, ftbconfig.BUTTON_SIZE)
-		self.setFlat(True)
+		self.setFlat(ftbconfig.FLAT_BUTTON)
 		self.index=index
 		self.ftbconfig=ftbconfig
 	def update_pos(self):

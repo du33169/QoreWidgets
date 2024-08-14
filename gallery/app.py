@@ -20,7 +20,7 @@ except ImportError:
 import rc_assets
 from ui_main import Ui_MainWindow
 
-class MainWindow(QMainWindow):
+class MainWindow(QoreWidgets.FramelessWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.ui = Ui_MainWindow()

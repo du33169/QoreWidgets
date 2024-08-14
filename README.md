@@ -12,6 +12,7 @@ Currently only PySide6 is supported.
 ## Widget List
 SideTabWidget
 ImmersiveTitleBar
+FramelessWindow
 ImmersiveMessageBox(todo)
 
 ## Install
