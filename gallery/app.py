@@ -40,6 +40,22 @@ class MainWindow(QoreWidgets.FramelessWindow):
 
     def titlebar_example(self):
         self.ui.label_appIcon.setPixmap(QIcon(":/icons/account").pixmap(20))
+        self.setWindowIcon(QIcon(":/icons/account").pixmap(20))
+        def toggle_titlebar():
+            if self.ui.tabWidget_selectTitleBar.currentWidget()==self.ui.tab_simple:
+                self.ui.widget_titlebar.show()
+                self.ui.widget_titlebar_container.hide()
+            elif self.ui.tabWidget_selectTitleBar.currentWidget()==self.ui.tab_immersive:
+                self.ui.widget_titlebar.hide()
+                self.ui.widget_titlebar_container.show()
+        self.ui.tabWidget_selectTitleBar.currentChanged.connect(toggle_titlebar)
+
+        def set_window_title():
+            self.setWindowTitle(self.ui.lineEdit_setTitle.text())
+        self.ui.btn_setTitle.clicked.connect(set_window_title)
+
+        toggle_titlebar()
+
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)

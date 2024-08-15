@@ -16,7 +16,10 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="ImmersiveTitleBar" name="widget_titlebar" native="true">
+     <widget class="ImmersiveTitleBar" name="widget_titlebar" native="true"/>
+    </item>
+    <item>
+     <widget class="ImmersiveTitleBarContainer" name="widget_titlebar_container" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="topMargin">
         <number>0</number>
@@ -34,7 +37,7 @@
        <item>
         <widget class="QLabel" name="label_title">
          <property name="text">
-          <string>This is ImmersiveTitleBar. Drag to move window.</string>
+          <string>This is ImmersiveTitleBarContainer. </string>
          </property>
         </widget>
        </item>
@@ -129,12 +132,12 @@
       <property name="tabBarAutoHide">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="tab_home">
+      <widget class="QWidget" name="tab_sidetab">
        <attribute name="icon">
-        <iconset theme=":/icons/home"/>
+        <iconset theme=":/icons/sidebar"/>
        </attribute>
        <attribute name="title">
-        <string>Home</string>
+        <string>SideTab</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
@@ -233,13 +236,128 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_settings">
+      <widget class="QWidget" name="tab_titlebar">
        <attribute name="icon">
-        <iconset theme=":/icons/settings"/>
+        <iconset theme=":/icons/titlebar"/>
        </attribute>
        <attribute name="title">
-        <string>Settings</string>
+        <string>TitleBar</string>
        </attribute>
+       <widget class="QLabel" name="label_selectTitleBarPrompt">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>90</y>
+          <width>291</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Select title bar style:</string>
+        </property>
+       </widget>
+       <widget class="QTabWidget" name="tabWidget_selectTitleBar">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>130</y>
+          <width>471</width>
+          <height>291</height>
+         </rect>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab_simple">
+         <attribute name="title">
+          <string>ImmersiveTitleBar</string>
+         </attribute>
+         <widget class="QLineEdit" name="lineEdit_setTitle">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>200</y>
+            <width>113</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_setTitle">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>200</y>
+            <width>101</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Set Title Text</string>
+          </property>
+         </widget>
+         <widget class="QTextBrowser" name="textBrowser">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>30</y>
+            <width>411</width>
+            <height>151</height>
+           </rect>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::NoFrame</enum>
+          </property>
+          <property name="html">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A simple title bar inherits ImmersiveTitleBarContainer, with a window icon and window title.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The icon and title will follow the changes of windowIcon and windowTitle of current window.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select this if you only want a title bar that can fit your theme.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;For better customization, try the base class ImmersiveTitleBarContainer.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="tab_immersive">
+         <attribute name="title">
+          <string>ImmersiveTitleBarContainer</string>
+         </attribute>
+         <widget class="QTextBrowser" name="textBrowser_2">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>20</y>
+            <width>421</width>
+            <height>171</height>
+           </rect>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::NoFrame</enum>
+          </property>
+          <property name="html">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A immersive title bar container with only minimize, maximize and close button. The rest area are left  as a empty layout for developer to put any widget they want.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The following actions are supported:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- drag to move window&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- automatically adjusting margin to reserve space for buttons&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- double click to maximize/restore&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- restore to normal when dragging at maximized state&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_about">
        <attribute name="icon">
@@ -258,6 +376,12 @@
   <customwidget>
    <class>SideTabWidget</class>
    <extends>QTabWidget</extends>
+   <header>QoreWidgets.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ImmersiveTitleBarContainer</class>
+   <extends>QWidget</extends>
    <header>QoreWidgets.h</header>
    <container>1</container>
   </customwidget>

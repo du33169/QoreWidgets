@@ -19,6 +19,7 @@ except ImportError:
 
 if qt_backend == QtBackend.PySide6:
 	from .__pyside6__.__sideTabWidget__.sideTabWidget import SideTabWidget
+	from .__pyside6__.__immersiveTitleBar__.immersiveTitleBarContainer import ImmersiveTitleBarContainer
 	from .__pyside6__.__immersiveTitleBar__.immersiveTitleBar import ImmersiveTitleBar
 	from .__pyside6__.__framelessWindow__.framelessWindow import FramelessWindow
 elif qt_backend == QtBackend.PyQt5:

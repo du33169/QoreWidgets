@@ -5,5 +5,7 @@
         <file alias="info">icons/info.svg</file>
         <file alias="settings">icons/settings.svg</file>
         <file alias="account">icons/account.svg</file>
+        <file alias="sidebar">icons/sidebar.svg</file>
+        <file alias="titlebar">icons/titlebar.svg</file>
     </qresource>
 </RCC>
