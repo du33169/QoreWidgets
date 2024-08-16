@@ -6,8 +6,9 @@ from PySide6.QtCore import Qt,QPoint
 
 @dataclass
 class FramelessWindowConfig:
-    HEIGHT: int = 48
     GRIP_WIDTH: int = 8
+    SHADOW: bool = True
+    # GRIP_COLOR: QColor = field(default_factory=lambda: QColor(0,0,0,0))
 
 _N_=1000 # weight of x
 def unit2id(ux,uy)->int:
@@ -126,6 +127,7 @@ class ResizeGrip(QWidget):
         self.raise_()
 
 class FramelessWindow(QMainWindow):
+    '''Frameless Window with resize grips'''
     def __init__(self, parent=None,flConfig:FramelessWindowConfig=FramelessWindowConfig()):
         super(FramelessWindow, self).__init__(parent)
         self.flConfig=flConfig
@@ -156,4 +158,20 @@ class FramelessWindow(QMainWindow):
         [grip.follow_geometry() for grip in self.pos2grip.values()]
     
     def init_shadow(self):
-        pass
+        if self.flConfig.SHADOW:      # DROP SHADOW
+            self.shadowWidget = QWidget(self)
+            # self.shadowWidget.setGeometry(100,100,100,100)
+            self.setCentralWidget(self.shadowWidget)
+            # self.layout().setParent(self.shadowWidget)
+            self.shadowWidget.show()
+            self.shadowWidget.raise_()
+            
+            self.shadowWidget.setStyleSheet("background-color: rgba(0, 0, 0, 150);")
+            self.shadow = QGraphicsDropShadowEffect(self)
+            self.shadow.setBlurRadius(17)
+            self.shadow.setXOffset(0)
+            self.shadow.setYOffset(0)
+            self.shadow.setColor(QColor(0, 0, 0, 150))
+            # move self.layout to self.shadowWidget
+            
+            self.shadowWidget.setGraphicsEffect(self.shadow)

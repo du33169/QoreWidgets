@@ -141,7 +141,7 @@ class MenuButton(QPushButton):
         painter.drawControl(QStyle.ControlElement.CE_PushButton, option)
 
 class SideTabWidget(QTabWidget):
-
+    '''A TabWidget with horizontal and foldable tabs. Animated.'''
     foldStateChanged=Signal(bool) # pass the fold state from the tabbar to the parent widget
 
     def __init__(self, parent=None, stConfig:SideTabConfig=SideTabConfig()):

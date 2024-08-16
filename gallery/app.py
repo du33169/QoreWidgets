@@ -7,6 +7,7 @@ from PySide6.QtGui import QIcon
 try:
     import QoreWidgets
 except ImportError:
+    print("QoreWidgets not installed, trying to import from local src")
     import sys
     import os
     # switch to current path
