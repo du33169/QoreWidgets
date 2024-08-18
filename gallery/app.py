@@ -39,6 +39,20 @@ class MainWindow(QoreWidgets.FramelessWindow):
         self.ui.btn_expand.clicked.connect(lambda: self.ui.sidetab.set_foldState(False))
         self.ui.btn_fold.clicked.connect(lambda: self.ui.sidetab.set_foldState(True))
 
+        self.icons=[]
+        for i in range(self.ui.sidetab.count()):
+            self.icons.append(self.ui.sidetab.tabIcon(i))
+        def toggle_icon():
+            if self.ui.check_tabIcon.isChecked():
+                for i in range(self.ui.sidetab.count()):
+                    self.ui.sidetab.setTabIcon(i, self.icons[i])
+            else:
+                # save all tab icons and set all to null               
+                for i in range(self.ui.sidetab.count()):
+                    self.ui.sidetab.setTabIcon(i, QIcon())
+        self.ui.check_tabIcon.stateChanged.connect(toggle_icon)
+        toggle_icon()
+
     def titlebar_example(self):
         self.ui.label_appIcon.setPixmap(QIcon(":/icons/account").pixmap(20))
         self.setWindowIcon(QIcon(":/icons/account").pixmap(20))

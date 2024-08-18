@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QHBoxLayout,
-    QLabel, QLineEdit, QMainWindow, QPushButton,
-    QSizePolicy, QSpacerItem, QTabWidget, QTextBrowser,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
+    QHBoxLayout, QLabel, QLineEdit, QMainWindow,
+    QPushButton, QSizePolicy, QSpacerItem, QTabWidget,
+    QTextBrowser, QVBoxLayout, QWidget)
 
 from QoreWidgets import (ImmersiveTitleBar, ImmersiveTitleBarContainer, SideTabWidget)
 
@@ -135,6 +135,34 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addLayout(self.horizontalLayout)
 
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
+
+        self.verticalLayout_2.addItem(self.verticalSpacer_3)
+
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_3.addItem(self.horizontalSpacer_5)
+
+        self.label_2 = QLabel(self.tab_sidetab)
+        self.label_2.setObjectName(u"label_2")
+
+        self.horizontalLayout_3.addWidget(self.label_2)
+
+        self.check_tabIcon = QCheckBox(self.tab_sidetab)
+        self.check_tabIcon.setObjectName(u"check_tabIcon")
+        self.check_tabIcon.setChecked(True)
+
+        self.horizontalLayout_3.addWidget(self.check_tabIcon)
+
+        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_3.addItem(self.horizontalSpacer_6)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_3)
+
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_2.addItem(self.verticalSpacer_2)
@@ -204,9 +232,11 @@ class Ui_MainWindow(object):
 
         self.label.setText(QCoreApplication.translate("MainWindow", u"auto margin reserving\u2192", None))
         self.label_foldState.setText("")
-        self.label_toggle_prompt.setText(QCoreApplication.translate("MainWindow", u"Programmatic Toggle:", None))
+        self.label_toggle_prompt.setText(QCoreApplication.translate("MainWindow", u"The SideTab can also be programmatically toggled:", None))
         self.btn_fold.setText(QCoreApplication.translate("MainWindow", u"Fold", None))
         self.btn_expand.setText(QCoreApplication.translate("MainWindow", u"Expand", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"If no tab icon is set, SideTabWidget will draw the first character as icon. ", None))
+        self.check_tabIcon.setText(QCoreApplication.translate("MainWindow", u"Use customized icons", None))
         self.label_click_toggle_prompt.setText(QCoreApplication.translate("MainWindow", u"\u2190 click the menu button to toggle sidebar", None))
         self.sidetab.setTabText(self.sidetab.indexOf(self.tab_sidetab), QCoreApplication.translate("MainWindow", u"SideTab", None))
         self.label_selectTitleBarPrompt.setText(QCoreApplication.translate("MainWindow", u"Select title bar style:", None))

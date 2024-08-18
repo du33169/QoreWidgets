@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from PySide6.QtWidgets import QTabWidget, QTabBar, QPushButton,QWidget,QStylePainter,QStyleOptionTab,QStyleOptionButton,QStyle
 from PySide6.QtCore import QRect,QPropertyAnimation,QEasingCurve,QParallelAnimationGroup,QSize,Qt,Signal,Slot
-from PySide6.QtGui import QPainter, QIcon ,QPaintEvent
+from PySide6.QtGui import QPainter, QIcon ,QPaintEvent,QFont
 from ... import rc
 
 @dataclass
@@ -23,16 +23,29 @@ class SideTabConfig:
         return self.MAX_TEXT_WIDTH + 2*self.PADDING + self.ICON_SIZE + 2*self.PADDING
     
 def draw_tab(stConfig:SideTabConfig, icon:QIcon, text:str,painter:QPainter, tabRect:QRect):
+    '''
+    if icon is null, will draw the first character of the text as icon
+    '''
     #draw the icon
-    iconSize = icon.actualSize(QSize(stConfig.ICON_SIZE, stConfig.ICON_SIZE)) 
+
+    iconSize = QSize(stConfig.ICON_SIZE, stConfig.ICON_SIZE)
+    if not icon.isNull():
+        iconSize = icon.actualSize(iconSize)
     iconRect = QRect(
         tabRect.left() + stConfig.PADDING,
         tabRect.top() + (tabRect.height() - iconSize.height()) // 2, 
         iconSize.width(),
         iconSize.height()
     )
-    
-    icon.paint(painter, iconRect, Qt.AlignmentFlag.AlignVCenter| Qt.AlignmentFlag.AlignLeft)
+    if not icon.isNull():
+        icon.paint(painter, iconRect, Qt.AlignmentFlag.AlignVCenter| Qt.AlignmentFlag.AlignLeft)
+    else:
+        old_font=painter.font()
+        font=QFont()
+        font.setPixelSize(iconSize.height()*0.8)
+        painter.setFont(font)
+        painter.drawText(iconRect, Qt.AlignmentFlag.AlignVCenter| Qt.AlignmentFlag.AlignCenter, text[0].upper())
+        painter.setFont(old_font)
     #draw the text
     textRect = QRect(
         iconRect.right() + stConfig.PADDING*2,
