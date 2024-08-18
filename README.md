@@ -68,4 +68,4 @@ Note: the gallery app will first attempt to import QoreWidgets from installed py
 
 ## Styling
 
-QoreWidgets mainly focus on functional enhancements with minimal emphasis on decoration. However, they should fit in with your global theme or stylesheets, for example, [QDarkStyleSheet](https://github.com/ColinDuquesnoy/QDarkStyleSheet).
+QoreWidgets mainly focus on functional enhancements with minimal emphasis on decoration. However, they should fit in with your global theme or stylesheets, for example, [PyQtDarkTheme](https://github.com/5yutan5/PyQtDarkTheme).

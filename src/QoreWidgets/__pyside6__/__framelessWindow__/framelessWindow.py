@@ -129,7 +129,7 @@ class ResizeGrip(QWidget):
 class FramelessWindow(QMainWindow):
     '''Frameless Window with resize grips'''
     def __init__(self, parent=None,flConfig:FramelessWindowConfig=FramelessWindowConfig()):
-        super(FramelessWindow, self).__init__(parent)
+        super().__init__(parent)
         self.flConfig=flConfig
 
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)

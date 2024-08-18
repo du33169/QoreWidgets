@@ -158,7 +158,7 @@ class SideTabWidget(QTabWidget):
     foldStateChanged=Signal(bool) # pass the fold state from the tabbar to the parent widget
 
     def __init__(self, parent=None, stConfig:SideTabConfig=SideTabConfig()):
-        QTabWidget.__init__(self, parent)
+        super().__init__(parent)
         self.stConfig=stConfig
 
         self.tabbar=SideTabBar(self,stConfig)
