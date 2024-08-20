@@ -1,6 +1,6 @@
 # Qore Widgets
 
-![PyPI - Version](https://img.shields.io/pypi/v/QoreWidgets)![PyPI - Downloads](https://img.shields.io/pypi/dm/QoreWidgets?label=monthly%20installed)![GitHub License](https://img.shields.io/github/license/du33169/QoreWidgets)
+![PyPI - Version](https://img.shields.io/pypi/v/QoreWidgets)![PyPI - Downloads](https://img.shields.io/pypi/dm/QoreWidgets)![GitHub License](https://img.shields.io/github/license/du33169/QoreWidgets)
 
 Yet another collection of those core widgets for a modern Qt application.
 
@@ -35,7 +35,7 @@ Most Qore Widgets are designed as drop-in replacements for their corresponding b
 
 ### With Qt Designer
 
-Note: If you installed PySide6 using pip, the designer is also installed as `pyside6-designer` executable.
+Tip: If you installed PySide6 using pip, the designer is also installed as `pyside6-designer` executable.
 
 1. Create the base widget in Qt Designer
 2. Right-click on the widget and select "Promote To..."
@@ -43,11 +43,11 @@ Note: If you installed PySide6 using pip, the designer is also installed as `pys
 4. Use the `pyside6-uic` tool (also installed with PySide6) to convert the .ui file to a .py file
 5. the base widget will be replaced by the appropriate Qore Widget during the conversion
 
-Refer to the [Qt Doc: using custom widgets in designer](https://doc.qt.io/qt-6/designer-using-custom-widgets.html) for more detailed instructions. 
+Refer to [Qt Doc: using custom widgets in designer](https://doc.qt.io/qt-6/designer-using-custom-widgets.html) for more detailed instructions. 
 
 ### Documentation
 
-for more infomation, check out our [QoreWidgets Documentation](https://github.com/du33169/QoreWidgets/wiki).
+For more infomation, check out the [QoreWidgets Documentation](https://github.com/du33169/QoreWidgets/wiki).
 
 
 
@@ -62,10 +62,8 @@ pip install PySide6
 python gallery/app.py
 ```
 
-Note: the gallery app will first attempt to import QoreWidgets from installed python packages. If not installed, it will import from the local  `src` directory.
-
-
+Note: the gallery app will first attempt to import QoreWidgets from installed python packages. If not installed, it will then import from the local  `src` directory.
 
 ## Styling
 
-QoreWidgets mainly focus on functional enhancements with minimal emphasis on decoration. However, they should fit in with your global theme or stylesheets, for example, [PyQtDarkTheme](https://github.com/5yutan5/PyQtDarkTheme).
+QoreWidgets mainly focus on functional enhancements with minimal decoration. However, they should fit in with your global theme or stylesheets, for example, [PyQtDarkTheme](https://github.com/5yutan5/PyQtDarkTheme).
