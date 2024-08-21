@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 
 from PySide6.QtWidgets import QTabWidget, QTabBar, QPushButton,QWidget,QStylePainter,QStyleOptionTab,QStyleOptionButton,QStyle
-from PySide6.QtCore import QRect,QPropertyAnimation,QEasingCurve,QParallelAnimationGroup,QSize,Qt,Signal,Slot
-from PySide6.QtGui import QPainter, QIcon ,QPaintEvent,QFont
-from ... import rc
+from PySide6.QtCore import QRect,QPropertyAnimation,QEasingCurve,QParallelAnimationGroup,QSize,Qt,Signal,Slot,QEvent
+from PySide6.QtGui import QIcon ,QPaintEvent,QFont
 
 @dataclass
 class SideTabConfig:
+    AUTO_EXPAND:bool=True
     PADDING = 15
     ICON_SIZE = 30
     MAX_TEXT_WIDTH = 80
@@ -22,7 +22,7 @@ class SideTabConfig:
     def EXPAND_WIDTH(self)->int:
         return self.MAX_TEXT_WIDTH + 2*self.PADDING + self.ICON_SIZE + 2*self.PADDING
     
-def draw_tab(stConfig:SideTabConfig, icon:QIcon, text:str,painter:QPainter, tabRect:QRect):
+def draw_tab(stConfig:SideTabConfig, icon:QIcon, text:str,painter:QStylePainter, tabRect:QRect):
     '''
     if icon is null, will draw the first character of the text as icon
     '''
@@ -120,6 +120,16 @@ class SideTabBar(QTabBar):
         # print(size)
         size.setHeight(size.height() + 2*SideTabConfig.PADDING)
         return size
+    
+    def enterEvent(self, event: QEvent) -> None:
+        if self.stConfig.AUTO_EXPAND and self.fold:
+            self.toggle()
+        return super().enterEvent(event)
+    
+    def leaveEvent(self, event: QEvent) -> None:
+        if self.stConfig.AUTO_EXPAND and not self.fold:
+            self.toggle()
+        return super().leaveEvent(event)
 
 class MenuButton(QPushButton):
     def __init__(self, parent=None, stConfig:SideTabConfig=...):
@@ -145,14 +155,14 @@ class MenuButton(QPushButton):
     def paintEvent(self, event: QPaintEvent) -> None:
         painter = QStylePainter(self)
         option = QStyleOptionButton()
-        
         self.initStyleOption(option)
-        draw_tab(self.stConfig, self.icon(), self.text(), painter, self.rect())
         
         option.icon = QIcon() # clear the icon and text, drawControl should only draw the button shape, else it will draw the icon and text again
         option.text = ""
         painter.drawControl(QStyle.ControlElement.CE_PushButton, option)
-
+        # painter.fillRect(self.rect().adjusted(2,2,-2,-2), self.palette().color(QPalette.ColorRole.Window))
+        draw_tab(self.stConfig, self.icon(), self.text(), painter, self.rect())
+    
 class SideTabWidget(QTabWidget):
     '''A TabWidget with horizontal and foldable tabs. Animated.'''
     foldStateChanged=Signal(bool) # pass the fold state from the tabbar to the parent widget
@@ -161,10 +171,11 @@ class SideTabWidget(QTabWidget):
         super().__init__(parent)
         self.stConfig=stConfig
 
+        # init tabbar
         self.tabbar=SideTabBar(self,stConfig)
         self.setTabBar(self.tabbar)
         self.tabbar.foldStateChanged.connect(self.exposeFoldState)
-
+        # init menu button
         self.menuBtn =MenuButton(self,stConfig)
         self.menuBtn.clicked.connect(self.tabbar.toggle)
 
