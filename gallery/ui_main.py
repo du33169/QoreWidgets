@@ -90,6 +90,7 @@ class Ui_MainWindow(object):
         self.sidetab = SideTabWidget(self.centralwidget)
         self.sidetab.setObjectName(u"sidetab")
         self.sidetab.setTabPosition(QTabWidget.TabPosition.West)
+        self.sidetab.setIconSize(QSize(30, 30))
         self.sidetab.setUsesScrollButtons(True)
         self.sidetab.setDocumentMode(False)
         self.sidetab.setTabBarAutoHide(False)
@@ -97,6 +98,11 @@ class Ui_MainWindow(object):
         self.tab_sidetab.setObjectName(u"tab_sidetab")
         self.verticalLayout_2 = QVBoxLayout(self.tab_sidetab)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.label_3 = QLabel(self.tab_sidetab)
+        self.label_3.setObjectName(u"label_3")
+
+        self.verticalLayout_2.addWidget(self.label_3)
+
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
@@ -231,6 +237,7 @@ class Ui_MainWindow(object):
         self.comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"you like", None))
 
         self.label.setText(QCoreApplication.translate("MainWindow", u"auto margin reserving\u2192", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u2190Auto expand on hover", None))
         self.label_foldState.setText("")
         self.label_toggle_prompt.setText(QCoreApplication.translate("MainWindow", u"The SideTab can also be programmatically toggled:", None))
         self.btn_fold.setText(QCoreApplication.translate("MainWindow", u"Fold", None))

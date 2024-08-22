@@ -1,38 +1,16 @@
-from dataclasses import dataclass
-
-from PySide6.QtWidgets import QTabWidget, QTabBar, QPushButton,QWidget,QStylePainter,QStyleOptionTab,QStyleOptionButton,QStyle
-from PySide6.QtCore import QRect,QPropertyAnimation,QEasingCurve,QParallelAnimationGroup,QSize,Qt,Signal,Slot,QEvent
+from PySide6.QtWidgets import QTabWidget, QTabBar, QPushButton,QWidget,QStylePainter,QStyleOptionTab,QStyle
+from PySide6.QtCore import QRect,QPropertyAnimation,QEasingCurve,QParallelAnimationGroup,QSize,Qt,Signal,Slot,QEvent,Property
 from PySide6.QtGui import QIcon ,QPaintEvent,QFont
 
-@dataclass
-class SideTabConfig:
-    AUTO_EXPAND:bool=True
-    PADDING = 15
-    ICON_SIZE = 30
-    MAX_TEXT_WIDTH = 80
-    DURATION = 400
-
-    MENU_TEXT="Menu"
-    MENU_ICON=QIcon(":/icons/menu")
-
-    @property
-    def FOLD_WIDTH(self)->int:
-        return self.ICON_SIZE + 2*self.PADDING
-    @property
-    def EXPAND_WIDTH(self)->int:
-        return self.MAX_TEXT_WIDTH + 2*self.PADDING + self.ICON_SIZE + 2*self.PADDING
-    
-def draw_tab(stConfig:SideTabConfig, icon:QIcon, text:str,painter:QStylePainter, tabRect:QRect):
+def draw_tab(iconSize:QSize, padding:int, icon:QIcon, text:str,painter:QStylePainter, tabRect:QRect):
     '''
     if icon is null, will draw the first character of the text as icon
     '''
     #draw the icon
-
-    iconSize = QSize(stConfig.ICON_SIZE, stConfig.ICON_SIZE)
     if not icon.isNull():
         iconSize = icon.actualSize(iconSize)
     iconRect = QRect(
-        tabRect.left() + stConfig.PADDING,
+        tabRect.left() + padding,
         tabRect.top() + (tabRect.height() - iconSize.height()) // 2, 
         iconSize.width(),
         iconSize.height()
@@ -48,9 +26,9 @@ def draw_tab(stConfig:SideTabConfig, icon:QIcon, text:str,painter:QStylePainter,
         painter.setFont(old_font)
     #draw the text
     textRect = QRect(
-        iconRect.right() + stConfig.PADDING*2,
+        iconRect.right() + padding*2,
         tabRect.top(),  # Adjust the top position as needed
-        tabRect.width()- iconRect.width() - 3*stConfig.PADDING,
+        tabRect.width()- iconRect.width() - 3*padding,
         tabRect.height()
     )
     painter.drawText(
@@ -63,44 +41,48 @@ class SideTabBar(QTabBar):
 
     foldStateChanged=Signal(bool)
 
-    def __init__(self, parent: QWidget | None = ..., stConfig:SideTabConfig=...) -> None:
+    def __init__(self, parent: "SideTabWidget") -> None:
         super().__init__(parent)
         self.fold=True
-        self.stConfig=stConfig
-        targetWidth=stConfig.EXPAND_WIDTH if not self.fold else stConfig.FOLD_WIDTH
+        self.par:SideTabWidget=parent
+        self.init_animation()
+        self.update_target_width()
+
+    def update_target_width(self):
+        targetWidth=self.par.expandWidth if not self.fold else self.par.foldWidth
+        
         self.setMinimumWidth(targetWidth)
         self.setMaximumWidth(targetWidth)
-
-        self.init_animation()
+        print(targetWidth)
 
     def init_animation(self):
-        self.animation_max = QPropertyAnimation(self, b"maximumWidth")
-        self.animation_max.setDuration(SideTabConfig.DURATION)
-        self.animation_max.setEasingCurve(QEasingCurve.Type.InOutQuart )
-        self.animation_min = QPropertyAnimation(self, b"minimumWidth")
-        self.animation_min.setDuration(SideTabConfig.DURATION)
+        self.animationMax = QPropertyAnimation(self, b"maximumWidth")
+        self.animationMax.setDuration(self.par.animateDuration)
+        self.animationMax.setEasingCurve(QEasingCurve.Type.InOutQuart )
+        self.animationMin = QPropertyAnimation(self, b"minimumWidth")
+        self.animationMin.setDuration(self.par.animateDuration)
 
-        self.animation_min.setEasingCurve(QEasingCurve.Type.InOutQuart )
-        self.animation_group = QParallelAnimationGroup()
-        self.animation_group.addAnimation(self.animation_max)
-        self.animation_group.addAnimation(self.animation_min)
+        self.animationMin.setEasingCurve(QEasingCurve.Type.InOutQuart )
+        self.animationGroup = QParallelAnimationGroup()
+        self.animationGroup.addAnimation(self.animationMax)
+        self.animationGroup.addAnimation(self.animationMin)
         
         def on_finished():
             # print('done')
             self.fold=not self.fold
             self.foldStateChanged.emit(self.fold)
             # print(self.fold)
-        self.animation_group.finished.connect(on_finished)
+        self.animationGroup.finished.connect(on_finished)
 
     def toggle(self):
         tfold=not self.fold
         start=self.width()
-        end=self.stConfig.EXPAND_WIDTH if not tfold else self.stConfig.FOLD_WIDTH
-        self.animation_max.setStartValue(start)
-        self.animation_max.setEndValue(end)
-        self.animation_min.setStartValue(start)
-        self.animation_min.setEndValue(end)
-        self.animation_group.start()
+        end=self.par.expandWidth if not tfold else self.par.foldWidth
+        self.animationMax.setStartValue(start)
+        self.animationMax.setEndValue(end)
+        self.animationMin.setStartValue(start)
+        self.animationMin.setEndValue(end)
+        self.animationGroup.start()
 
     def paintEvent(self, event):
         painter = QStylePainter(self)
@@ -110,7 +92,7 @@ class SideTabBar(QTabBar):
             painter.drawControl(QStyle.ControlElement.CE_TabBarTabShape, option)
 
             tabRect = self.tabRect(index)
-            draw_tab(self.stConfig, self.tabIcon(index), self.tabText(index), painter, tabRect)
+            draw_tab(self.iconSize(), self.par.padding, self.tabIcon(index), self.tabText(index), painter, tabRect)
 
     def tabSizeHint(self, index):
         size = QTabBar.tabSizeHint(self, index)
@@ -118,28 +100,24 @@ class SideTabBar(QTabBar):
             size.transpose()
         size.setWidth(self.minimumWidth())
         # print(size)
-        size.setHeight(size.height() + 2*SideTabConfig.PADDING)
+        size.setHeight(size.height() + 2*self.par.padding)
         return size
     
     def enterEvent(self, event: QEvent) -> None:
-        if self.stConfig.AUTO_EXPAND and self.fold:
+        if self.par.autoExpand and self.fold:
             self.toggle()
         return super().enterEvent(event)
     
     def leaveEvent(self, event: QEvent) -> None:
-        if self.stConfig.AUTO_EXPAND and not self.fold:
+        if self.par.autoExpand and not self.fold:
             self.toggle()
         return super().leaveEvent(event)
 
 class MenuButton(QPushButton):
-    def __init__(self, parent=None, stConfig:SideTabConfig=...):
+    def __init__(self, parent:"SideTabWidget"):
         QPushButton.__init__(self, parent)
         self.setFlat(True)
-        self.stConfig=stConfig
-        self.setIcon(stConfig.MENU_ICON)
-        self.setIconSize(QSize(stConfig.ICON_SIZE,stConfig.ICON_SIZE))
-        self.setText(stConfig.MENU_TEXT)
-
+        self.par:SideTabWidget=parent
     def updatePos(self,parent: QTabWidget):
         tabbar=parent.tabBar()
         if tabbar.count() > 0:
@@ -151,32 +129,26 @@ class MenuButton(QPushButton):
             menuBtnHeight=tabbar.height()
         menuBtnBottom=parent.height()
         self.setGeometry(0,menuBtnBottom-menuBtnHeight,menuBtnWidth,menuBtnHeight)
-
-    def paintEvent(self, event: QPaintEvent) -> None:
-        painter = QStylePainter(self)
-        option = QStyleOptionButton()
-        self.initStyleOption(option)
-        
-        option.icon = QIcon() # clear the icon and text, drawControl should only draw the button shape, else it will draw the icon and text again
-        option.text = ""
-        painter.drawControl(QStyle.ControlElement.CE_PushButton, option)
-        # painter.fillRect(self.rect().adjusted(2,2,-2,-2), self.palette().color(QPalette.ColorRole.Window))
-        draw_tab(self.stConfig, self.icon(), self.text(), painter, self.rect())
     
 class SideTabWidget(QTabWidget):
     '''A TabWidget with horizontal and foldable tabs. Animated.'''
-    foldStateChanged=Signal(bool) # pass the fold state from the tabbar to the parent widget
 
-    def __init__(self, parent=None, stConfig:SideTabConfig=SideTabConfig()):
+    def __init__(self, parent:QWidget=None):
         super().__init__(parent)
-        self.stConfig=stConfig
-
+        # init properties
+        self._autoExpand=True
+        self._padding = 15
+        self._maxTextWidth = 80
+        self._animateDuration = 400
+        self._menuIcon=QIcon(":/icons/menu")
         # init tabbar
-        self.tabbar=SideTabBar(self,stConfig)
+        self.tabbar=SideTabBar(self)
         self.setTabBar(self.tabbar)
         self.tabbar.foldStateChanged.connect(self.exposeFoldState)
         # init menu button
-        self.menuBtn =MenuButton(self,stConfig)
+        self.menuBtn =MenuButton(self)
+        self.menuBtn.setIcon(self.menuIcon)
+
         self.menuBtn.clicked.connect(self.tabbar.toggle)
 
     def paintEvent(self, event: QPaintEvent) -> None:
@@ -184,13 +156,66 @@ class SideTabWidget(QTabWidget):
         self.tabBar().setMaximumHeight(self.height()-self.menuBtn.height())
         return super().paintEvent(event)
     
-    def is_folded(self)->bool:
+    def isFolded(self)->bool:
         return self.tabbar.fold
     
-    def set_foldState(self, fold:bool)->None:
-        if fold!= self.is_folded():
+    def setFolded(self, fold:bool)->None:
+        if fold!= self.isFolded():
             self.tabbar.toggle()
 
+    #@override
+    def setIconSize(self, size:QSize):
+        super().setIconSize(size)
+        self.menuBtn.setIconSize(size)
+        self.tabbar.update_target_width()
+    #signal
+    foldStateChanged=Signal(bool) # pass the fold state from the tabbar to the parent widget
     @Slot(bool)
     def exposeFoldState(self, fold:bool):
         self.foldStateChanged.emit(fold)
+
+    #property
+    folded=Property(bool,fget=isFolded,fset=setFolded,notify=foldStateChanged,doc="fold state of the side tab widget")
+
+    def getAutoExpand(self)->bool:
+        return self._autoExpand
+    def setAutoExpand(self, value:bool)->None:
+        self._autoExpand=value
+    autoExpand=Property(bool,fget=getAutoExpand,fset=setAutoExpand,doc="whether to expand the tabs automatically when hovering over the tabbar")
+
+    def getPadding(self)->int:
+        return self._padding
+    def setPadding(self, value:int)->None:
+        self._padding=value
+        self.tabbar.update_target_width()
+    padding=Property(int,fget=getPadding,fset=setPadding,doc="padding between the icon and text")
+
+    def getMaxTextWidth(self)->int:
+        return self._maxTextWidth
+    def setMaxTextWidth(self, value:int)->None:
+        self._maxTextWidth=value
+        self.tabbar.update_target_width()
+    maxTextWidth=Property(int,fget=getMaxTextWidth,fset=setMaxTextWidth,doc="maximum width of the text, used to determine the expanded width of the tabbar")
+
+    def getAnimateDuration(self)->int:
+        return self._animateDuration
+    def setAnimateDuration(self, value:int)->None:
+        self._animateDuration=value
+        self.tabbar.animationMax.setDuration(value)
+        self.tabbar.animationMin.setDuration(value)
+    animateDuration=Property(int,fget=getAnimateDuration,fset=setAnimateDuration,doc="duration of the animation when expanding or collapsing the tabbar")
+
+    def getMenuIcon(self)->QIcon:
+        return self._menuIcon
+    def setMenuIcon(self, value:QIcon)->None:
+        self._menuIcon=value
+        self.menuBtn.setIcon(value)
+    menuIcon=Property(QIcon,fget=getMenuIcon,fset=setMenuIcon,doc="icon of the menu button")
+
+    @property
+    def foldWidth(self)->int:
+        return self.iconSize().width() + 2*self.padding
+    @property
+    def expandWidth(self)->int:
+        return self.maxTextWidth + 2*self.padding + self.iconSize().width() + 2*self.padding
+

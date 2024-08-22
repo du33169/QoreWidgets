@@ -1,14 +1,7 @@
-from dataclasses import dataclass
 from enum import Enum
-from PySide6.QtGui import QMouseEvent, QColor,QResizeEvent,QWindowStateChangeEvent
-from PySide6.QtWidgets import QMainWindow, QWidget,QGraphicsDropShadowEffect
-from PySide6.QtCore import Qt,QPoint
-
-@dataclass
-class FramelessWindowConfig:
-    GRIP_WIDTH: int = 8
-    SHADOW: bool = True
-    # GRIP_COLOR: QColor = field(default_factory=lambda: QColor(0,0,0,0))
+from PySide6.QtGui import QMouseEvent, QResizeEvent,QWindowStateChangeEvent
+from PySide6.QtWidgets import QMainWindow, QWidget
+from PySide6.QtCore import Qt,QPoint,Property
 
 _N_=1000 # weight of x
 def unit2id(ux,uy)->int:
@@ -67,17 +60,20 @@ class GripPos(Enum):
 #[end GripPos]
 
 class ResizeGrip(QWidget):
-    def __init__(self, parent:QWidget,gripPos:GripPos,flConfig:FramelessWindowConfig):
+    def __init__(self, parent:QWidget,gripPos:GripPos):
         super().__init__(parent)
         self.gripPos=gripPos
-        self.flConfig=flConfig
+        self.par:FramelessWindow=parent
         self.raise_()
         self.setCursor(self.gripPos.cursorShape)
         self.resizing=False
 
-    # def paintEvent(self, event: QPaintEvent) -> None:
+    # uncomment to visualize resize grip, for debug
+    # def paintEvent(self, event) -> None:
+    #     from PySide6.QtGui import QColor
+    #     from PySide6.QtWidgets import QStylePainter
     #     painter=QStylePainter(self)
-    #     painter.fillRect(self.rect(),self.flConfig.GRIP_COLOR)
+    #     painter.fillRect(self.rect(),QColor(255,0,0,100))
     #     super().paintEvent(event)
 
     def mousePressEvent(self, event: QMouseEvent) -> None: # start resize
@@ -105,43 +101,40 @@ class ResizeGrip(QWidget):
     def update_size(self):
         parent:QWidget=self.parent()
         if self.gripPos.is_vertical_line:
-            self.setFixedWidth(self.flConfig.GRIP_WIDTH)
-            self.setFixedHeight(parent.height()-4*self.flConfig.GRIP_WIDTH+1)
+            self.setFixedWidth(self.par.gripWidth)
+            self.setFixedHeight(parent.height()-2*self.par.gripWidth)
         elif self.gripPos.is_horizontal_line:
-            self.setFixedWidth(parent.width()-4*self.flConfig.GRIP_WIDTH+1)
-            self.setFixedHeight(self.flConfig.GRIP_WIDTH)
+            self.setFixedWidth(parent.width()-2*self.par.gripWidth)
+            self.setFixedHeight(self.par.gripWidth)
         else:# corner
-            self.setFixedWidth(self.flConfig.GRIP_WIDTH*2)
-            self.setFixedHeight(self.flConfig.GRIP_WIDTH*2)
+            self.setFixedWidth(self.par.gripWidth)
+            self.setFixedHeight(self.par.gripWidth)
 
     def follow_geometry(self):
         parent:QWidget=self.parent()
         self.update_size()
-        parCenterPoint=parent.rect().center()
         ux,uy=self.gripPos.unitVec
-        ux=-1 if ux==0 else ux # for TOP,BOTTOM
-        uy=-1 if uy==0 else uy # for LEFT,RIGHT
-        tx=parCenterPoint.x()+ux*(parent.width()//2) - (self.width()-1 if ux==1 else 0) +(2*self.flConfig.GRIP_WIDTH if self.gripPos.is_horizontal_line else 0)
-        ty=parCenterPoint.y()+uy*(parent.height()//2) - (self.height()-1 if uy==1 else 0) +(2*self.flConfig.GRIP_WIDTH if self.gripPos.is_vertical_line else 0)
+        txMap={-1:0, 0: self.par.gripWidth, 1: parent.width()-self.par.gripWidth}
+        tyMap={-1:0, 0: self.par.gripWidth, 1: parent.height()-self.par.gripWidth}
+        tx=txMap[ux]
+        ty=tyMap[uy]
         self.move(tx,ty)
         self.raise_()
 
 class FramelessWindow(QMainWindow):
     '''Frameless Window with resize grips'''
-    def __init__(self, parent=None,flConfig:FramelessWindowConfig=FramelessWindowConfig()):
+    def __init__(self, parent=None):
         super().__init__(parent)
-        self.flConfig=flConfig
-
+        self.init_properties()
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         # self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         # self.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground)
         self.init_grips()
-        self.init_shadow()
 
     def init_grips(self):
         self.pos2grip:dict[GripPos,ResizeGrip]={}
         for gripPos in GripPos:
-            grip=ResizeGrip(self,gripPos,self.flConfig)
+            grip=ResizeGrip(self,gripPos)
             self.pos2grip[gripPos]=grip
             grip.show()
             grip.follow_geometry()
@@ -156,22 +149,14 @@ class FramelessWindow(QMainWindow):
     def resizeEvent(self, event: QResizeEvent) -> None:
         super().resizeEvent(event)
         [grip.follow_geometry() for grip in self.pos2grip.values()]
-    
-    def init_shadow(self):
-        if self.flConfig.SHADOW:      # DROP SHADOW
-            self.shadowWidget = QWidget(self)
-            # self.shadowWidget.setGeometry(100,100,100,100)
-            self.setCentralWidget(self.shadowWidget)
-            # self.layout().setParent(self.shadowWidget)
-            self.shadowWidget.show()
-            self.shadowWidget.raise_()
-            
-            self.shadowWidget.setStyleSheet("background-color: rgba(0, 0, 0, 150);")
-            self.shadow = QGraphicsDropShadowEffect(self)
-            self.shadow.setBlurRadius(17)
-            self.shadow.setXOffset(0)
-            self.shadow.setYOffset(0)
-            self.shadow.setColor(QColor(0, 0, 0, 150))
-            # move self.layout to self.shadowWidget
-            
-            self.shadowWidget.setGraphicsEffect(self.shadow)
+
+    def init_properties(self):
+        self._gripWidth=6
+
+    def get_gripWidth(self)->int:
+        return self._gripWidth
+    def set_gripWidth(self,value:int)->None:
+        self._gripWidth=value
+        [grip.update_size() for grip in self.pos2grip.values()]
+
+    gripWidth=Property(int,get_gripWidth,set_gripWidth,doc="Width of resize grips")

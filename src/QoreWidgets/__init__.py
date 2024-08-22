@@ -1,4 +1,6 @@
 from enum import Enum
+
+from . import rc #noqa:F401
 class QtBackend(Enum):
 	Undefined = 0
 	PySide6 = 1

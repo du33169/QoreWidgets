@@ -34,10 +34,10 @@ class MainWindow(QoreWidgets.FramelessWindow):
             self.ui.label_foldState.setText(f"The Sidebar is {'folded >_<' if fold else 'unfolded OvO'}")
 
         self.ui.sidetab.foldStateChanged.connect(update_foldState)
-        update_foldState(self.ui.sidetab.is_folded())
+        update_foldState(self.ui.sidetab.isFolded())
 
-        self.ui.btn_expand.clicked.connect(lambda: self.ui.sidetab.set_foldState(False))
-        self.ui.btn_fold.clicked.connect(lambda: self.ui.sidetab.set_foldState(True))
+        self.ui.btn_expand.clicked.connect(lambda: self.ui.sidetab.setFolded(False))
+        self.ui.btn_fold.clicked.connect(lambda: self.ui.sidetab.setFolded(True))
 
         self.icons=[]
         for i in range(self.ui.sidetab.count()):
