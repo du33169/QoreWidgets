@@ -44,6 +44,7 @@ class SideTabBar(QTabBar):
     def __init__(self, parent: "SideTabWidget") -> None:
         super().__init__(parent)
         self.fold=True
+        self.targetFold=True
         self.par:SideTabWidget=parent
         self.init_animation()
         self.update_target_width()
@@ -53,7 +54,7 @@ class SideTabBar(QTabBar):
         
         self.setMinimumWidth(targetWidth)
         self.setMaximumWidth(targetWidth)
-        print(targetWidth)
+        # print(targetWidth)
 
     def init_animation(self):
         self.animationMax = QPropertyAnimation(self, b"maximumWidth")
@@ -69,20 +70,27 @@ class SideTabBar(QTabBar):
         
         def on_finished():
             # print('done')
-            self.fold=not self.fold
+            self.fold=self.targetFold
             self.foldStateChanged.emit(self.fold)
             # print(self.fold)
         self.animationGroup.finished.connect(on_finished)
 
-    def toggle(self):
-        tfold=not self.fold
+    def setFold(self, newFold:bool)->None:
+        if newFold == self.targetFold:
+            return
+        self.targetFold=newFold
+        if self.targetFold != self.fold:# animation is running
+            self.animationGroup.stop()
         start=self.width()
-        end=self.par.expandWidth if not tfold else self.par.foldWidth
+        end=self.par.expandWidth if not self.targetFold else self.par.foldWidth
         self.animationMax.setStartValue(start)
         self.animationMax.setEndValue(end)
         self.animationMin.setStartValue(start)
         self.animationMin.setEndValue(end)
         self.animationGroup.start()
+
+    def toggle(self):
+       self.setFold(not self.fold)
 
     def paintEvent(self, event):
         painter = QStylePainter(self)
@@ -104,13 +112,15 @@ class SideTabBar(QTabBar):
         return size
     
     def enterEvent(self, event: QEvent) -> None:
-        if self.par.autoExpand and self.fold:
-            self.toggle()
+        # print('enter')
+        if self.par.autoExpand and self.targetFold:
+            self.setFold(False)
         return super().enterEvent(event)
     
     def leaveEvent(self, event: QEvent) -> None:
-        if self.par.autoExpand and not self.fold:
-            self.toggle()
+        # print('leave')
+        if self.par.autoExpand and not self.targetFold:
+            self.setFold(True)
         return super().leaveEvent(event)
 
 class MenuButton(QPushButton):
@@ -162,6 +172,12 @@ class SideTabWidget(QTabWidget):
     def setFolded(self, fold:bool)->None:
         if fold!= self.isFolded():
             self.tabbar.toggle()
+
+    # def leaveEvent(self, event: QEvent) -> None:
+    #     # sometimes tabbar cannot trigger the leaveEvent if mouse moves too fast, so we need to check the fold state here as a safeguard
+    #     super().leaveEvent(event)
+    #     if self.autoExpand and not self.isFolded():
+    #         self.setFolded(True)
 
     #@override
     def setIconSize(self, size:QSize):
