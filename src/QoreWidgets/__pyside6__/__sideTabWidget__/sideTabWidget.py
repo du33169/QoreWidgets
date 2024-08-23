@@ -138,7 +138,8 @@ class MenuButton(QPushButton):
             menuBtnWidth=tabbar.width()
             menuBtnHeight=tabbar.height()
         menuBtnBottom=parent.height()
-        self.setGeometry(0,menuBtnBottom-menuBtnHeight,menuBtnWidth,menuBtnHeight)
+        self.setFixedHeight(menuBtnHeight)
+        self.setGeometry(tabbar.x(),menuBtnBottom-menuBtnHeight,menuBtnWidth,menuBtnHeight)
     
 class SideTabWidget(QTabWidget):
     '''A TabWidget with horizontal and foldable tabs. Animated.'''
@@ -155,12 +156,17 @@ class SideTabWidget(QTabWidget):
         self.tabbar=SideTabBar(self)
         self.setTabBar(self.tabbar)
         self.tabbar.foldStateChanged.connect(self.exposeFoldState)
+        self.setTabPosition(QTabWidget.TabPosition.West)
         # init menu button
         self.menuBtn =MenuButton(self)
         self.menuBtn.setIcon(self.menuIcon)
 
         self.menuBtn.clicked.connect(self.tabbar.toggle)
 
+    #@override
+    def setTabPosition(self, position: QTabWidget.TabPosition):
+        assert position in [QTabWidget.TabPosition.West, QTabWidget.TabPosition.East], "SideTabWidget only supports horizontal tab position, current position is " + str(self.tabPosition())
+        super().setTabPosition(position)
     def paintEvent(self, event: QPaintEvent) -> None:
         self.menuBtn.updatePos(self)
         self.tabBar().setMaximumHeight(self.height()-self.menuBtn.height())
