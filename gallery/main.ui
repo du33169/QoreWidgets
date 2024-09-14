@@ -435,6 +435,53 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </widget>
        </widget>
       </widget>
+      <widget class="QWidget" name="tab_overlay">
+       <attribute name="icon">
+        <iconset theme=":/icons/loading"/>
+       </attribute>
+       <attribute name="title">
+        <string>Overlay</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <spacer name="horizontalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QPushButton" name="btn_loadingOverlay">
+            <property name="text">
+             <string>LoadingOverlay</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="tab_about">
        <attribute name="icon">
         <iconset theme=":/icons/info"/>

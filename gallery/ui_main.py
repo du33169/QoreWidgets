@@ -210,10 +210,34 @@ class Ui_MainWindow(object):
         self.tabWidget_selectTitleBar.addTab(self.tab_immersive, "")
         icon1 = QIcon(QIcon.fromTheme(u":/icons/titlebar"))
         self.sidetab.addTab(self.tab_titlebar, icon1, "")
+        self.tab_overlay = QWidget()
+        self.tab_overlay.setObjectName(u"tab_overlay")
+        self.horizontalLayout_4 = QHBoxLayout(self.tab_overlay)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer_7)
+
+        self.verticalLayout_3 = QVBoxLayout()
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.btn_loadingOverlay = QPushButton(self.tab_overlay)
+        self.btn_loadingOverlay.setObjectName(u"btn_loadingOverlay")
+
+        self.verticalLayout_3.addWidget(self.btn_loadingOverlay)
+
+
+        self.horizontalLayout_4.addLayout(self.verticalLayout_3)
+
+        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer_8)
+
+        icon2 = QIcon(QIcon.fromTheme(u":/icons/loading"))
+        self.sidetab.addTab(self.tab_overlay, icon2, "")
         self.tab_about = QWidget()
         self.tab_about.setObjectName(u"tab_about")
-        icon2 = QIcon(QIcon.fromTheme(u":/icons/info"))
-        self.sidetab.addTab(self.tab_about, icon2, "")
+        icon3 = QIcon(QIcon.fromTheme(u":/icons/info"))
+        self.sidetab.addTab(self.tab_about, icon3, "")
 
         self.verticalLayout.addWidget(self.sidetab)
 
@@ -279,6 +303,8 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- restore to normal when dragging at maximized state</p></body></html>", None))
         self.tabWidget_selectTitleBar.setTabText(self.tabWidget_selectTitleBar.indexOf(self.tab_immersive), QCoreApplication.translate("MainWindow", u"ImmersiveTitleBarContainer", None))
         self.sidetab.setTabText(self.sidetab.indexOf(self.tab_titlebar), QCoreApplication.translate("MainWindow", u"TitleBar", None))
+        self.btn_loadingOverlay.setText(QCoreApplication.translate("MainWindow", u"LoadingOverlay", None))
+        self.sidetab.setTabText(self.sidetab.indexOf(self.tab_overlay), QCoreApplication.translate("MainWindow", u"Overlay", None))
         self.sidetab.setTabText(self.sidetab.indexOf(self.tab_about), QCoreApplication.translate("MainWindow", u"About", None))
     # retranslateUi
 

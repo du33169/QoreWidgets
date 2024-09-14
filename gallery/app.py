@@ -1,9 +1,10 @@
 
 
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QIcon
-# from qdarktheme import load_stylesheet
+# import qdarktheme
 
+import rc_assets# noqa:F401
 try:
     import QoreWidgets
 except ImportError:
@@ -18,7 +19,6 @@ except ImportError:
     )
     import QoreWidgets
 
-import rc_assets
 from ui_main import Ui_MainWindow
 
 class MainWindow(QoreWidgets.FramelessWindow):
@@ -28,6 +28,7 @@ class MainWindow(QoreWidgets.FramelessWindow):
         self.ui.setupUi(self)
         self.sidebar_example()
         self.titlebar_example()
+        self.overlay_example()
 
     def sidebar_example(self):
         def update_foldState(fold: bool):
@@ -71,10 +72,23 @@ class MainWindow(QoreWidgets.FramelessWindow):
 
         toggle_titlebar()
 
+    def overlay_example(self):
+        lo=QoreWidgets.LoadingOverlay(self.ui.tab_overlay,rps=1.5,alpha=150)
+        def test_overlay():
+            import time
+            def action():
+                # print("overlay action")
+                time.sleep(3)
+                # print("overlay action done")
+            
+            lo.run(action)
+
+        self.ui.btn_loadingOverlay.clicked.connect(test_overlay)
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
-    # app.setStyleSheet(load_stylesheet())
+    # qdarktheme.setup_theme('dark')
     window = MainWindow()
     window.show()
+
     sys.exit(app.exec())
