@@ -73,7 +73,11 @@ class MainWindow(QoreWidgets.FramelessWindow):
         toggle_titlebar()
 
     def overlay_example(self):
-        lo=QoreWidgets.LoadingOverlay(self.ui.tab_overlay,rps=1.5,alpha=150)
+        self.ui.text_overlayContent.setPlainText('''Fugiat aliqua duis et fugiat irure eu magna mollit labore amet. Elit velit id amet qui sunt voluptate consectetur eiusmod officia deserunt et magna aute. Deserunt cupidatat ea incididunt aute duis id esse commodo sint.
+Voluptate laborum occaecat dolor occaecat tempor eu duis quis laborum. Reprehenderit aliquip enim id dolor enim minim ad est veniam id aute labore officia eu. Ea fugiat occaecat et cupidatat culpa anim est cillum duis sunt do. Labore culpa reprehenderit aliqua laboris ut Lorem pariatur mollit non deserunt exercitation cillum.
+Amet commodo consequat minim veniam incididunt. Velit Lorem et ut dolore est sit nostrud sunt enim voluptate amet pariatur ut. Ea pariatur enim irure dolor enim id cillum occaecat pariatur deserunt velit minim. In cupidatat anim duis commodo voluptate nostrud mollit enim veniam amet Lorem qui.''')
+        self.lo=QoreWidgets.LoadingOverlay(self.ui.widget_overlayContainer,rps=1.5,alpha=150)
+
         def test_overlay():
             import time
             def action():
@@ -81,9 +85,11 @@ class MainWindow(QoreWidgets.FramelessWindow):
                 time.sleep(3)
                 # print("overlay action done")
             
-            lo.run(action)
+            self.lo.run_thread(action)
 
         self.ui.btn_loadingOverlay.clicked.connect(test_overlay)
+        self.ui.btn_startOverlay.clicked.connect(self.lo.start)
+        self.ui.btn_stopOverlay.clicked.connect(self.lo.stop)
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)

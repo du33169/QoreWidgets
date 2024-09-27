@@ -214,30 +214,88 @@ class Ui_MainWindow(object):
         self.tab_overlay.setObjectName(u"tab_overlay")
         self.horizontalLayout_4 = QHBoxLayout(self.tab_overlay)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_4.addItem(self.horizontalSpacer_7)
-
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.label = QLabel(self.tab_overlay)
+        self.label.setObjectName(u"label")
+
+        self.verticalLayout_3.addWidget(self.label)
+
         self.btn_loadingOverlay = QPushButton(self.tab_overlay)
         self.btn_loadingOverlay.setObjectName(u"btn_loadingOverlay")
 
         self.verticalLayout_3.addWidget(self.btn_loadingOverlay)
 
+        self.label_4 = QLabel(self.tab_overlay)
+        self.label_4.setObjectName(u"label_4")
+
+        self.verticalLayout_3.addWidget(self.label_4)
+
+        self.btn_startOverlay = QPushButton(self.tab_overlay)
+        self.btn_startOverlay.setObjectName(u"btn_startOverlay")
+
+        self.verticalLayout_3.addWidget(self.btn_startOverlay)
+
+        self.btn_stopOverlay = QPushButton(self.tab_overlay)
+        self.btn_stopOverlay.setObjectName(u"btn_stopOverlay")
+
+        self.verticalLayout_3.addWidget(self.btn_stopOverlay)
+
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_3.addItem(self.verticalSpacer_4)
+
+        self.label_5 = QLabel(self.tab_overlay)
+        self.label_5.setObjectName(u"label_5")
+
+        self.verticalLayout_3.addWidget(self.label_5)
+
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_6.addItem(self.horizontalSpacer_5)
+
+        self.widget_overlayContainer = QWidget(self.tab_overlay)
+        self.widget_overlayContainer.setObjectName(u"widget_overlayContainer")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget_overlayContainer.sizePolicy().hasHeightForWidth())
+        self.widget_overlayContainer.setSizePolicy(sizePolicy)
+        self.horizontalLayout_7 = QHBoxLayout(self.widget_overlayContainer)
+        self.horizontalLayout_7.setSpacing(0)
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.text_overlayContent = QTextBrowser(self.widget_overlayContainer)
+        self.text_overlayContent.setObjectName(u"text_overlayContent")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.text_overlayContent.sizePolicy().hasHeightForWidth())
+        self.text_overlayContent.setSizePolicy(sizePolicy1)
+
+        self.horizontalLayout_7.addWidget(self.text_overlayContent)
+
+
+        self.horizontalLayout_6.addWidget(self.widget_overlayContainer)
+
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_6.addItem(self.horizontalSpacer_3)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_6)
+
+        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_3.addItem(self.verticalSpacer_5)
+
 
         self.horizontalLayout_4.addLayout(self.verticalLayout_3)
 
-        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_4.addItem(self.horizontalSpacer_8)
-
-        icon2 = QIcon(QIcon.fromTheme(u":/icons/loading"))
-        self.sidetab.addTab(self.tab_overlay, icon2, "")
-        self.tab_about = QWidget()
-        self.tab_about.setObjectName(u"tab_about")
-        icon3 = QIcon(QIcon.fromTheme(u":/icons/info"))
-        self.sidetab.addTab(self.tab_about, icon3, "")
+        icon5 = QIcon(QIcon.fromTheme(u":/icons/loading"))
+        self.sidetab.addTab(self.tab_overlay, icon5, "")
 
         self.verticalLayout.addWidget(self.sidetab)
 
@@ -303,8 +361,12 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- restore to normal when dragging at maximized state</p></body></html>", None))
         self.tabWidget_selectTitleBar.setTabText(self.tabWidget_selectTitleBar.indexOf(self.tab_immersive), QCoreApplication.translate("MainWindow", u"ImmersiveTitleBarContainer", None))
         self.sidetab.setTabText(self.sidetab.indexOf(self.tab_titlebar), QCoreApplication.translate("MainWindow", u"TitleBar", None))
-        self.btn_loadingOverlay.setText(QCoreApplication.translate("MainWindow", u"LoadingOverlay", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Wait for a function:", None))
+        self.btn_loadingOverlay.setText(QCoreApplication.translate("MainWindow", u"Play", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"Or manually:", None))
+        self.btn_startOverlay.setText(QCoreApplication.translate("MainWindow", u"Start", None))
+        self.btn_stopOverlay.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"The overlay will show on the following widget:", None))
         self.sidetab.setTabText(self.sidetab.indexOf(self.tab_overlay), QCoreApplication.translate("MainWindow", u"Overlay", None))
-        self.sidetab.setTabText(self.sidetab.indexOf(self.tab_about), QCoreApplication.translate("MainWindow", u"About", None))
     # retranslateUi
 
