@@ -6,17 +6,19 @@ Yet another collection of those core widgets for a modern Qt application.
 
 Backend Support: Currently **only PySide6 is supported.**
 
+![](screenshots/gallery.png)
+
 ## Widget List
 
-| Qore Widget<br>[Base Widget]                          | Desc                                                         | Screenshot |
-| ----------------------------------------------------- | ------------------------------------------------------------ | ---------- |
-| **SideTabWidget**<br>[TabWidget]                      | A TabWidget with horizontal and foldable tabs. Animated.     |            |
-| **ImmersiveTitleBar**<br>[ImmersiveTitleBarContainer] | A simple immersive title bar with icon, title, and close, maximize, minimize buttons. |            |
-| **ImmersiveTitleBarContainer**<br>[QWidget]           | An immersive title bar Container with only  buttons. Put any widgets you like. |            |
-| **FramelessWindow**<br>[QMainWindow]                  | A frameless window with resize grips. Better use it with the ImmersiveTitleBar. |            |
-| **LoadingOverlay**<br>[QWidget]                       | Create a mask on the targeted widget with a rotating icon during long time tasks |            |
-| **ImmersiveMesageBox** <br>[QMessageBox]              | (todo)                                                       |            |
-| **DrawerWidget**                                      | (todo)                                                       |            |
+| Qore Widget<br>[Base Widget]                          | Desc                                                         | Screenshot                                      |
+| ----------------------------------------------------- | ------------------------------------------------------------ | ----------------------------------------------- |
+| **SideTabWidget**<br>[TabWidget]                      | A TabWidget with horizontal and foldable tabs. Animated. Support automatic expand on mouse hover. | ![](screenshots/SideTabWidget_expanded.png)     |
+| **ImmersiveTitleBar**<br>[ImmersiveTitleBarContainer] | A simple immersive title bar with icon, title, and close, maximize, minimize buttons. | ![](screenshots/ImmersiveTitleBar.png)          |
+| **ImmersiveTitleBarContainer**<br>[QWidget]           | An immersive title bar Container with only  buttons. Put any widgets you like. | ![](screenshots/ImmersiveTitleBarContainer.png) |
+| **FramelessWindow**<br>[QMainWindow]                  | A frameless window with resize grips. Better use it with the ImmersiveTitleBar. | /                                               |
+| **LoadingOverlay**<br>[QWidget]                       | Create a mask on the targeted widget with a rotating icon during long time tasks | ![](screenshots/LoadingOverlay.png)             |
+| **ImmersiveMesageBox** <br>[QMessageBox]              | (todo)                                                       |                                                 |
+| **DrawerWidget**                                      | (todo)                                                       |                                                 |
 
 
 

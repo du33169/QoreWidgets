@@ -1,10 +1,10 @@
 
 
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QMessageBox
 from PySide6.QtGui import QIcon
+from PySide6.QtCore import QSize, QTimer
 # import qdarktheme
 
-import rc_assets# noqa:F401
 try:
     import QoreWidgets
 except ImportError:
@@ -29,7 +29,77 @@ class MainWindow(QoreWidgets.FramelessWindow):
         self.sidebar_example()
         self.titlebar_example()
         self.overlay_example()
+        self.load_readme()
 
+        self.ui.btn_scrshot.released.connect(self.grab_screenshot)
+        self.ui.btn_settings.hide()
+
+    def grab_screenshot(self):
+        self.ui.btn_scrshot.hide()
+        self.ui.btn_settings.show()
+        import time
+        curdir=os.path.dirname(os.path.abspath(__file__))
+        pardir=os.path.dirname(curdir)
+        screenshot_dir=os.path.join(pardir, 'screenshots')
+        os.makedirs(screenshot_dir,exist_ok=True)
+        
+        # grab gallery
+        targetSize=QSize(540, 420)
+        self.resize(targetSize)
+        time.sleep(0.1)
+        self.grab().save(os.path.join(screenshot_dir, "gallery.png"))
+        # grab sidebar
+
+        def grab_expanded():
+            self.ui.sidetab.grab().save(os.path.join(screenshot_dir, f"{self.ui.sidetab.__class__.__name__}_expanded.png"))
+            print("grabbed expanded sidebar")
+            self.ui.sidetab.tabbar.animationGroup.finished.disconnect(grab_expanded)
+
+            def grab_folded():
+                self.ui.sidetab.grab().save(os.path.join(screenshot_dir, f"{self.ui.sidetab.__class__.__name__}_folded.png"))
+                self.ui.sidetab.tabbar.animationGroup.finished.disconnect(grab_folded)
+                print("grabbed folded sidebar")
+
+                self.lo.start()
+        
+                def grab_overlay():
+                    self.ui.widget_overlayContainer.grab().save(os.path.join(screenshot_dir, f"{self.lo.__class__.__name__}.png"))
+                    print("grabbed overlay")
+                    self.lo.stop()
+                QTimer.singleShot(1000,grab_overlay)
+                self.ui.sidetab.setCurrentIndex(self.ui.sidetab.indexOf(self.ui.tab_overlay))
+
+            self.ui.sidetab.tabbar.animationGroup.finished.connect(grab_folded)
+            self.ui.sidetab.setFolded(True)
+
+        self.ui.sidetab.tabbar.animationGroup.finished.connect(grab_expanded)
+        self.ui.sidetab.setFolded(False)
+        print("waiting for sidebar animation")
+
+
+        # grab titlebar
+        self.ui.widget_titlebar.show()
+        self.ui.widget_titlebar.grab().save(os.path.join(screenshot_dir, f"{self.ui.widget_titlebar.__class__.__name__}.png"))
+        self.ui.widget_titlebar.hide()
+        self.ui.widget_titlebar_container.show()
+        self.ui.widget_titlebar_container.grab().save(os.path.join(screenshot_dir, f"{self.ui.widget_titlebar_container.__class__.__name__}.png"))
+        # grab overlay
+
+        # destroy setttings button
+        self.ui.btn_settings.hide()
+        self.ui.btn_scrshot.show()
+        # popup message
+        QMessageBox.information(self, "Screenshot saved", f"Screenshots saved to {screenshot_dir} folder")
+
+    def load_readme(self):
+        # curdir=os.path.dirname(os.path.abspath(__file__))
+        # readme_path=os.path.join(os.path.dirname(curdir), 'README.md')
+        # self.ui.textBrowser_home.setSource('file:///'+readme_path.replace('\\','/'),type=QTextDocument.ResourceType.MarkdownResource)
+        self.ui.textBrowser_home.setMarkdown('''
+# The QoreWidgets Gallery
+
+This gallery is a collection of examples of how to use the QoreWidgets library.
+''')
     def sidebar_example(self):
         def update_foldState(fold: bool):
             self.ui.label_foldState.setText(f"The Sidebar is {'folded >_<' if fold else 'unfolded OvO'}")
@@ -57,6 +127,9 @@ class MainWindow(QoreWidgets.FramelessWindow):
     def titlebar_example(self):
         self.ui.label_appIcon.setPixmap(QIcon(":/icons/account").pixmap(20))
         self.setWindowIcon(QIcon(":/icons/account").pixmap(20))
+        self.ui.widget_titlebar.setIconSize(24)
+        self.ui.widget_titlebar.setFlatButton(True)
+        self.ui.widget_titlebar_container.setFlatButton(True)
         def toggle_titlebar():
             if self.ui.tabWidget_selectTitleBar.currentWidget()==self.ui.tab_simple:
                 self.ui.widget_titlebar.show()

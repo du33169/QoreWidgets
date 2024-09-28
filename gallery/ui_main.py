@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
-    QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-    QPushButton, QSizePolicy, QSpacerItem, QTabWidget,
-    QTextBrowser, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QHBoxLayout,
+    QLabel, QLineEdit, QMainWindow, QPushButton,
+    QSizePolicy, QSpacerItem, QTabWidget, QTextBrowser,
+    QVBoxLayout, QWidget)
 
 from QoreWidgets import (ImmersiveTitleBar, ImmersiveTitleBarContainer, SideTabWidget)
 
@@ -51,38 +51,32 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.label_title)
 
+        self.lineEdit = QLineEdit(self.widget_titlebar_container)
+        self.lineEdit.setObjectName(u"lineEdit")
+        self.lineEdit.setFrame(True)
+        self.lineEdit.setClearButtonEnabled(True)
+
+        self.horizontalLayout_2.addWidget(self.lineEdit)
+
         self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer_4)
 
-        self.comboBox = QComboBox(self.widget_titlebar_container)
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.setObjectName(u"comboBox")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.comboBox.sizePolicy().hasHeightForWidth())
-        self.comboBox.setSizePolicy(sizePolicy)
+        self.btn_scrshot = QPushButton(self.widget_titlebar_container)
+        self.btn_scrshot.setObjectName(u"btn_scrshot")
+        icon = QIcon(QIcon.fromTheme(u":/icons/camera"))
+        self.btn_scrshot.setIcon(icon)
+        self.btn_scrshot.setFlat(True)
 
-        self.horizontalLayout_2.addWidget(self.comboBox)
+        self.horizontalLayout_2.addWidget(self.btn_scrshot)
 
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.btn_settings = QPushButton(self.widget_titlebar_container)
+        self.btn_settings.setObjectName(u"btn_settings")
+        icon1 = QIcon(QIcon.fromTheme(u":/icons/settings"))
+        self.btn_settings.setIcon(icon1)
+        self.btn_settings.setFlat(True)
 
-        self.horizontalLayout_2.addItem(self.horizontalSpacer_3)
-
-        self.label = QLabel(self.widget_titlebar_container)
-        self.label.setObjectName(u"label")
-
-        self.horizontalLayout_2.addWidget(self.label)
-
-        self.line = QFrame(self.widget_titlebar_container)
-        self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.Shape.VLine)
-        self.line.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.horizontalLayout_2.addWidget(self.line)
+        self.horizontalLayout_2.addWidget(self.btn_settings)
 
 
         self.verticalLayout.addWidget(self.widget_titlebar_container)
@@ -94,6 +88,19 @@ class Ui_MainWindow(object):
         self.sidetab.setUsesScrollButtons(True)
         self.sidetab.setDocumentMode(False)
         self.sidetab.setTabBarAutoHide(False)
+        self.tab_home = QWidget()
+        self.tab_home.setObjectName(u"tab_home")
+        self.horizontalLayout_5 = QHBoxLayout(self.tab_home)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.textBrowser_home = QTextBrowser(self.tab_home)
+        self.textBrowser_home.setObjectName(u"textBrowser_home")
+        self.textBrowser_home.setFrameShape(QFrame.Shape.NoFrame)
+        self.textBrowser_home.setOpenExternalLinks(True)
+
+        self.horizontalLayout_5.addWidget(self.textBrowser_home)
+
+        icon2 = QIcon(QIcon.fromTheme(u":/icons/home"))
+        self.sidetab.addTab(self.tab_home, icon2, "")
         self.tab_sidetab = QWidget()
         self.tab_sidetab.setObjectName(u"tab_sidetab")
         self.verticalLayout_2 = QVBoxLayout(self.tab_sidetab)
@@ -107,11 +114,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
 
-        self.label_foldState = QLabel(self.tab_sidetab)
-        self.label_foldState.setObjectName(u"label_foldState")
-        self.label_foldState.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.label_toggle_prompt = QLabel(self.tab_sidetab)
+        self.label_toggle_prompt.setObjectName(u"label_toggle_prompt")
 
-        self.verticalLayout_2.addWidget(self.label_foldState)
+        self.verticalLayout_2.addWidget(self.label_toggle_prompt)
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
@@ -119,10 +125,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
-        self.label_toggle_prompt = QLabel(self.tab_sidetab)
-        self.label_toggle_prompt.setObjectName(u"label_toggle_prompt")
+        self.label_foldState = QLabel(self.tab_sidetab)
+        self.label_foldState.setObjectName(u"label_foldState")
+        self.label_foldState.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.horizontalLayout.addWidget(self.label_toggle_prompt)
+        self.horizontalLayout.addWidget(self.label_foldState)
 
         self.btn_fold = QPushButton(self.tab_sidetab)
         self.btn_fold.setObjectName(u"btn_fold")
@@ -147,27 +154,19 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_3.addItem(self.horizontalSpacer_5)
-
         self.label_2 = QLabel(self.tab_sidetab)
         self.label_2.setObjectName(u"label_2")
 
         self.horizontalLayout_3.addWidget(self.label_2)
 
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_3)
+
         self.check_tabIcon = QCheckBox(self.tab_sidetab)
         self.check_tabIcon.setObjectName(u"check_tabIcon")
         self.check_tabIcon.setChecked(True)
 
-        self.horizontalLayout_3.addWidget(self.check_tabIcon)
-
-        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_3.addItem(self.horizontalSpacer_6)
-
-
-        self.verticalLayout_2.addLayout(self.horizontalLayout_3)
+        self.verticalLayout_2.addWidget(self.check_tabIcon)
 
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -178,8 +177,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.label_click_toggle_prompt)
 
-        icon = QIcon(QIcon.fromTheme(u":/icons/sidebar"))
-        self.sidetab.addTab(self.tab_sidetab, icon, "")
+        icon3 = QIcon(QIcon.fromTheme(u":/icons/sidebar"))
+        self.sidetab.addTab(self.tab_sidetab, icon3, "")
         self.tab_titlebar = QWidget()
         self.tab_titlebar.setObjectName(u"tab_titlebar")
         self.label_selectTitleBarPrompt = QLabel(self.tab_titlebar)
@@ -208,8 +207,8 @@ class Ui_MainWindow(object):
         self.textBrowser_2.setGeometry(QRect(20, 20, 421, 171))
         self.textBrowser_2.setFrameShape(QFrame.Shape.NoFrame)
         self.tabWidget_selectTitleBar.addTab(self.tab_immersive, "")
-        icon1 = QIcon(QIcon.fromTheme(u":/icons/titlebar"))
-        self.sidetab.addTab(self.tab_titlebar, icon1, "")
+        icon4 = QIcon(QIcon.fromTheme(u":/icons/titlebar"))
+        self.sidetab.addTab(self.tab_titlebar, icon4, "")
         self.tab_overlay = QWidget()
         self.tab_overlay.setObjectName(u"tab_overlay")
         self.horizontalLayout_4 = QHBoxLayout(self.tab_overlay)
@@ -304,7 +303,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.sidetab.setCurrentIndex(0)
-        self.tabWidget_selectTitleBar.setCurrentIndex(0)
+        self.tabWidget_selectTitleBar.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -313,15 +312,14 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.label_appIcon.setText(QCoreApplication.translate("MainWindow", u"[Icon]", None))
-        self.label_title.setText(QCoreApplication.translate("MainWindow", u"This is ImmersiveTitleBarContainer. ", None))
-        self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Put", None))
-        self.comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"any widget", None))
-        self.comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"you like", None))
-
-        self.label.setText(QCoreApplication.translate("MainWindow", u"auto margin reserving\u2192", None))
+        self.label_title.setText(QCoreApplication.translate("MainWindow", u"The QoreWidgets Gallery ", None))
+        self.lineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"This is a fake search bar...", None))
+        self.btn_scrshot.setText("")
+        self.btn_settings.setText("")
+        self.sidetab.setTabText(self.sidetab.indexOf(self.tab_home), QCoreApplication.translate("MainWindow", u"Home", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u2190Auto expand on hover", None))
-        self.label_foldState.setText("")
         self.label_toggle_prompt.setText(QCoreApplication.translate("MainWindow", u"The SideTab can also be programmatically toggled:", None))
+        self.label_foldState.setText("")
         self.btn_fold.setText(QCoreApplication.translate("MainWindow", u"Fold", None))
         self.btn_expand.setText(QCoreApplication.translate("MainWindow", u"Expand", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"If no tab icon is set, SideTabWidget will draw the first character as icon. ", None))

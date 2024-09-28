@@ -7,5 +7,6 @@
         <file alias="account">icons/account.svg</file>
         <file alias="sidebar">icons/sidebar.svg</file>
         <file alias="titlebar">icons/titlebar.svg</file>
+        <file alias="camera">icons/camera.svg</file>
     </qresource>
 </RCC>

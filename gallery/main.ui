@@ -37,7 +37,20 @@
        <item>
         <widget class="QLabel" name="label_title">
          <property name="text">
-          <string>This is ImmersiveTitleBarContainer. </string>
+          <string>The QoreWidgets Gallery </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit">
+         <property name="frame">
+          <bool>true</bool>
+         </property>
+         <property name="placeholderText">
+          <string>This is a fake search bar...</string>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -58,57 +71,28 @@
         </spacer>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <item>
-          <property name="text">
-           <string>Put</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>any widget</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>you like</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Orientation::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Policy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label">
+        <widget class="QPushButton" name="btn_scrshot">
          <property name="text">
-          <string>auto margin reserving→</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset theme=":/icons/camera"/>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Orientation::Vertical</enum>
+        <widget class="QPushButton" name="btn_settings">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset theme=":/icons/settings"/>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -138,6 +122,26 @@
       <property name="tabBarAutoHide">
        <bool>false</bool>
       </property>
+      <widget class="QWidget" name="tab_home">
+       <attribute name="icon">
+        <iconset theme=":/icons/home"/>
+       </attribute>
+       <attribute name="title">
+        <string>Home</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QTextBrowser" name="textBrowser_home">
+          <property name="frameShape">
+           <enum>QFrame::Shape::NoFrame</enum>
+          </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="tab_sidetab">
        <attribute name="icon">
         <iconset theme=":/icons/sidebar"/>
@@ -167,12 +171,9 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="label_foldState">
+         <widget class="QLabel" name="label_toggle_prompt">
           <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignCenter</set>
+           <string>The SideTab can also be programmatically toggled:</string>
           </property>
          </widget>
         </item>
@@ -192,9 +193,12 @@
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="label_toggle_prompt">
+           <widget class="QLabel" name="label_foldState">
             <property name="text">
-             <string>The SideTab can also be programmatically toggled:</string>
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -246,49 +250,23 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <widget class="QLabel" name="label_2">
             <property name="text">
              <string>If no tab icon is set, SideTabWidget will draw the first character as icon. </string>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QCheckBox" name="check_tabIcon">
-            <property name="text">
-             <string>Use customized icons</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_6">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="check_tabIcon">
+          <property name="text">
+           <string>Use customized icons</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item>
          <spacer name="verticalSpacer_2">
@@ -342,7 +320,7 @@
          </rect>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab_simple">
          <attribute name="title">
