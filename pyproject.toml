@@ -1,7 +1,7 @@
 
 [project]
 name="QoreWidgets"
-version="0.2.0"
+version="0.2.1"
 description = "Yet another collection of those core widgets for a modern qt application."
 
 authors = [
