@@ -6,5 +6,6 @@
         <file alias="maximize">icons/maximize.svg</file>
         <file alias="restore">icons/restore.svg</file>
         <file alias="loading">icons/loading.svg</file>
+        <file alias="empty">icons/empty.svg</file>
     </qresource>
 </RCC>

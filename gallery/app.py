@@ -1,10 +1,10 @@
 
 
 from PySide6.QtWidgets import QApplication, QMessageBox
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon,QStandardItemModel,QStandardItem
 from PySide6.QtCore import QSize, QTimer
 # import qdarktheme
-
+import rc_assets
 try:
     import QoreWidgets
 except ImportError:
@@ -28,7 +28,8 @@ class MainWindow(QoreWidgets.FramelessWindow):
         self.ui.setupUi(self)
         self.sidebar_example()
         self.titlebar_example()
-        self.overlay_example()
+        self.loadingOverlay_example()
+        self.emptyOverlay_example()
         self.load_readme()
 
         self.ui.btn_scrshot.released.connect(self.grab_screenshot)
@@ -61,13 +62,20 @@ class MainWindow(QoreWidgets.FramelessWindow):
                 print("grabbed folded sidebar")
 
                 self.lo.start()
-        
-                def grab_overlay():
-                    self.ui.widget_overlayContainer.grab().save(os.path.join(screenshot_dir, f"{self.lo.__class__.__name__}.png"))
-                    print("grabbed overlay")
-                    self.lo.stop()
-                QTimer.singleShot(1000,grab_overlay)
                 self.ui.sidetab.setCurrentIndex(self.ui.sidetab.indexOf(self.ui.tab_overlay))
+                self.ui.tabwidget_overlay.setCurrentIndex(self.ui.tabwidget_overlay.indexOf(self.ui.tab_loadingOverlay))
+                def grab_loadingOverlay():
+                    
+                    self.ui.widget_overlayContainer.grab().save(os.path.join(screenshot_dir, f"{self.lo.__class__.__name__}.png"))
+                    print("grabbed loading overlay")
+                    self.lo.stop()
+                    self.ui.tabwidget_overlay.setCurrentIndex(self.ui.tabwidget_overlay.indexOf(self.ui.tab_emptyOverlay))
+                    def grab_emptyOverlay():
+                        self.ui.treeView_emptyOverlay.grab().save(os.path.join(screenshot_dir, f"{QoreWidgets.EmptyOverlay.__name__}.png"))
+                        print("grabbed empty overlay")
+                    QTimer.singleShot(1000,grab_emptyOverlay)
+                QTimer.singleShot(1000,grab_loadingOverlay)
+                
 
             self.ui.sidetab.tabbar.animationGroup.finished.connect(grab_folded)
             self.ui.sidetab.setFolded(True)
@@ -145,7 +153,7 @@ This gallery is a collection of examples of how to use the QoreWidgets library.
 
         toggle_titlebar()
 
-    def overlay_example(self):
+    def loadingOverlay_example(self):
         self.ui.text_overlayContent.setPlainText('''Fugiat aliqua duis et fugiat irure eu magna mollit labore amet. Elit velit id amet qui sunt voluptate consectetur eiusmod officia deserunt et magna aute. Deserunt cupidatat ea incididunt aute duis id esse commodo sint.
 Voluptate laborum occaecat dolor occaecat tempor eu duis quis laborum. Reprehenderit aliquip enim id dolor enim minim ad est veniam id aute labore officia eu. Ea fugiat occaecat et cupidatat culpa anim est cillum duis sunt do. Labore culpa reprehenderit aliqua laboris ut Lorem pariatur mollit non deserunt exercitation cillum.
 Amet commodo consequat minim veniam incididunt. Velit Lorem et ut dolore est sit nostrud sunt enim voluptate amet pariatur ut. Ea pariatur enim irure dolor enim id cillum occaecat pariatur deserunt velit minim. In cupidatat anim duis commodo voluptate nostrud mollit enim veniam amet Lorem qui.''')
@@ -163,6 +171,50 @@ Amet commodo consequat minim veniam incididunt. Velit Lorem et ut dolore est sit
         self.ui.btn_loadingOverlay.clicked.connect(test_overlay)
         self.ui.btn_startOverlay.clicked.connect(self.lo.start)
         self.ui.btn_stopOverlay.clicked.connect(self.lo.stop)
+    def emptyOverlay_example(self):
+        itemViews=[
+            self.ui.listView_emptyOverlay,self.ui.listWidget_emptyOverlay,
+            self.ui.tableView_emptyOverlay,self.ui.tableWidget_emptyOverlay,
+            self.ui.treeView_emptyOverlay,self.ui.treeWidget_emptyOverlay,
+        ]
+
+        viewModel=QStandardItemModel()
+        models:list[QStandardItemModel]=[viewModel,self.ui.listWidget_emptyOverlay.model(),self.ui.tableWidget_emptyOverlay.model(),self.ui.treeWidget_emptyOverlay.model()]
+        for model in models:
+            target=None
+            if hasattr(model,'setHorizontalHeaderLabels'):
+                target=model
+            elif hasattr(model.parent(),'setHorizontalHeaderLabels'):
+                target=model.parent()
+            # print(model,target)
+            if target is not None:
+                target.setColumnCount(2)
+                target.setHorizontalHeaderLabels(['Column 1', 'Column 2'])
+        self.ui.treeWidget_emptyOverlay.setHeaderLabels(['Column 1', 'Column 2'])
+
+        self.ui.listView_emptyOverlay.setModel(viewModel)
+        self.ui.tableView_emptyOverlay.setModel(viewModel)
+        self.ui.treeView_emptyOverlay.setModel(viewModel)
+
+        for itemView in itemViews:
+            emptyOverlay=QoreWidgets.EmptyOverlay(itemView,text=f"{itemView.__class__.__name__} is empty")
+        def add_item():
+            for model in models:
+                model.insertRow(0)
+                model.setData(model.index(0,0), 'Item 1')
+                model.setData(model.index(0,1), 'Item 2')
+        
+        def remove_item():
+            for model in models:
+                if model.rowCount()>0:
+                    model.removeRow(0)
+        def reset_model():
+            for model in models:
+                model.removeRows(0,model.rowCount())
+        self.ui.btn_resetItem.clicked.connect(reset_model)
+        self.ui.btn_addItem.clicked.connect(add_item)
+        self.ui.btn_removeItem.clicked.connect(remove_item)
+
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)

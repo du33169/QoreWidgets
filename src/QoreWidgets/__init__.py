@@ -24,7 +24,8 @@ if qt_backend == QtBackend.PySide6:
 	from .__pyside6__.__immersiveTitleBar__.immersiveTitleBarContainer import ImmersiveTitleBarContainer
 	from .__pyside6__.__immersiveTitleBar__.immersiveTitleBar import ImmersiveTitleBar
 	from .__pyside6__.__framelessWindow__.framelessWindow import FramelessWindow
-	from .__pyside6__.__loadingOverlay__.loadingOverlay import LoadingOverlay
+	from .__pyside6__.__overlay__.loadingOverlay import LoadingOverlay
+	from .__pyside6__.__overlay__.emptyOverlay import EmptyOverlay
 elif qt_backend == QtBackend.PyQt5:
 	#TODO
 	raise NotImplementedError("PyQt5 backend is not implemented yet.")

@@ -17,6 +17,7 @@ Backend Support: Currently **only PySide6 is supported.**
 | **ImmersiveTitleBarContainer**<br>[QWidget]           | An immersive title bar Container with only  buttons. Put any widgets you like. | ![](screenshots/ImmersiveTitleBarContainer.png) |
 | **FramelessWindow**<br>[QMainWindow]                  | A frameless window with resize grips. Better use it with the ImmersiveTitleBar. | /                                               |
 | **LoadingOverlay**<br>[QWidget]                       | Create a mask on the targeted widget with a rotating icon during long time tasks | ![](screenshots/LoadingOverlay.png)             |
+| **EmptyOverlay**<br>[QWidget]                         | Automatically show/hide a empty indicator mask on the target item view/widget when it's empty or not |                                                 |
 | **ImmersiveMesageBox** <br>[QMessageBox]              | (todo)                                                       |                                                 |
 | **DrawerWidget**                                      | (todo)                                                       |                                                 |
 
