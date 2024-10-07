@@ -61,12 +61,12 @@ class MainWindow(QoreWidgets.FramelessWindow):
                 self.ui.sidetab.tabbar.animationGroup.finished.disconnect(grab_folded)
                 print("grabbed folded sidebar")
 
+                # grab overlay
                 self.lo.start()
                 self.ui.sidetab.setCurrentIndex(self.ui.sidetab.indexOf(self.ui.tab_overlay))
                 self.ui.tabwidget_overlay.setCurrentIndex(self.ui.tabwidget_overlay.indexOf(self.ui.tab_loadingOverlay))
                 def grab_loadingOverlay():
-                    
-                    self.ui.widget_overlayContainer.grab().save(os.path.join(screenshot_dir, f"{self.lo.__class__.__name__}.png"))
+                    self.ui.text_overlayContent.grab().save(os.path.join(screenshot_dir, f"{self.lo.__class__.__name__}.png"))
                     print("grabbed loading overlay")
                     self.lo.stop()
                     self.ui.tabwidget_overlay.setCurrentIndex(self.ui.tabwidget_overlay.indexOf(self.ui.tab_emptyOverlay))
@@ -91,7 +91,7 @@ class MainWindow(QoreWidgets.FramelessWindow):
         self.ui.widget_titlebar.hide()
         self.ui.widget_titlebar_container.show()
         self.ui.widget_titlebar_container.grab().save(os.path.join(screenshot_dir, f"{self.ui.widget_titlebar_container.__class__.__name__}.png"))
-        # grab overlay
+
 
         # destroy setttings button
         self.ui.btn_settings.hide()
@@ -157,7 +157,7 @@ This gallery is a collection of examples of how to use the QoreWidgets library.
         self.ui.text_overlayContent.setPlainText('''Fugiat aliqua duis et fugiat irure eu magna mollit labore amet. Elit velit id amet qui sunt voluptate consectetur eiusmod officia deserunt et magna aute. Deserunt cupidatat ea incididunt aute duis id esse commodo sint.
 Voluptate laborum occaecat dolor occaecat tempor eu duis quis laborum. Reprehenderit aliquip enim id dolor enim minim ad est veniam id aute labore officia eu. Ea fugiat occaecat et cupidatat culpa anim est cillum duis sunt do. Labore culpa reprehenderit aliqua laboris ut Lorem pariatur mollit non deserunt exercitation cillum.
 Amet commodo consequat minim veniam incididunt. Velit Lorem et ut dolore est sit nostrud sunt enim voluptate amet pariatur ut. Ea pariatur enim irure dolor enim id cillum occaecat pariatur deserunt velit minim. In cupidatat anim duis commodo voluptate nostrud mollit enim veniam amet Lorem qui.''')
-        self.lo=QoreWidgets.LoadingOverlay(self.ui.widget_overlayContainer,rps=1.5,alpha=150)
+        self.lo=QoreWidgets.LoadingOverlay(self.ui.text_overlayContent,rps=1.5,alpha=150)
 
         def test_overlay():
             import time
@@ -180,6 +180,9 @@ Amet commodo consequat minim veniam incididunt. Velit Lorem et ut dolore est sit
 
         viewModel=QStandardItemModel()
         models:list[QStandardItemModel]=[viewModel,self.ui.listWidget_emptyOverlay.model(),self.ui.tableWidget_emptyOverlay.model(),self.ui.treeWidget_emptyOverlay.model()]
+        
+        columns=['A', 'B']
+        
         for model in models:
             target=None
             if hasattr(model,'setHorizontalHeaderLabels'):
@@ -188,16 +191,16 @@ Amet commodo consequat minim veniam incididunt. Velit Lorem et ut dolore est sit
                 target=model.parent()
             # print(model,target)
             if target is not None:
-                target.setColumnCount(2)
-                target.setHorizontalHeaderLabels(['Column 1', 'Column 2'])
-        self.ui.treeWidget_emptyOverlay.setHeaderLabels(['Column 1', 'Column 2'])
+                target.setColumnCount(len(columns))
+                target.setHorizontalHeaderLabels(columns)
+        self.ui.treeWidget_emptyOverlay.setHeaderLabels(columns)
 
         self.ui.listView_emptyOverlay.setModel(viewModel)
         self.ui.tableView_emptyOverlay.setModel(viewModel)
         self.ui.treeView_emptyOverlay.setModel(viewModel)
 
         for itemView in itemViews:
-            emptyOverlay=QoreWidgets.EmptyOverlay(itemView,text=f"{itemView.__class__.__name__} is empty")
+            emptyOverlay=QoreWidgets.EmptyOverlay(itemView,text=f"{itemView.__class__.__name__} is empty", iconSize=24)
         def add_item():
             for model in models:
                 model.insertRow(0)

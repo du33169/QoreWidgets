@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.3
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(608, 507)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
@@ -61,7 +61,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.lineEdit)
 
-        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer_4 = QSpacerItem(30, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer_4)
 
@@ -222,109 +222,82 @@ class Ui_MainWindow(object):
         self.tab_loadingOverlay.setObjectName(u"tab_loadingOverlay")
         self.verticalLayout_3 = QVBoxLayout(self.tab_loadingOverlay)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.horizontalLayout_9 = QHBoxLayout()
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
         self.label = QLabel(self.tab_loadingOverlay)
         self.label.setObjectName(u"label")
 
-        self.verticalLayout_3.addWidget(self.label)
+        self.horizontalLayout_9.addWidget(self.label)
 
         self.btn_loadingOverlay = QPushButton(self.tab_loadingOverlay)
         self.btn_loadingOverlay.setObjectName(u"btn_loadingOverlay")
 
-        self.verticalLayout_3.addWidget(self.btn_loadingOverlay)
+        self.horizontalLayout_9.addWidget(self.btn_loadingOverlay)
+
+        self.horizontalSpacer_5 = QSpacerItem(20, 20, QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_9.addItem(self.horizontalSpacer_5)
 
         self.label_4 = QLabel(self.tab_loadingOverlay)
         self.label_4.setObjectName(u"label_4")
 
-        self.verticalLayout_3.addWidget(self.label_4)
+        self.horizontalLayout_9.addWidget(self.label_4)
 
         self.btn_startOverlay = QPushButton(self.tab_loadingOverlay)
         self.btn_startOverlay.setObjectName(u"btn_startOverlay")
 
-        self.verticalLayout_3.addWidget(self.btn_startOverlay)
+        self.horizontalLayout_9.addWidget(self.btn_startOverlay)
 
         self.btn_stopOverlay = QPushButton(self.tab_loadingOverlay)
         self.btn_stopOverlay.setObjectName(u"btn_stopOverlay")
 
-        self.verticalLayout_3.addWidget(self.btn_stopOverlay)
+        self.horizontalLayout_9.addWidget(self.btn_stopOverlay)
 
-        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout_3.addItem(self.verticalSpacer_4)
-
-        self.label_5 = QLabel(self.tab_loadingOverlay)
-        self.label_5.setObjectName(u"label_5")
-
-        self.verticalLayout_3.addWidget(self.label_5)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_9)
 
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_6.addItem(self.horizontalSpacer_5)
-
-        self.widget_overlayContainer = QWidget(self.tab_loadingOverlay)
-        self.widget_overlayContainer.setObjectName(u"widget_overlayContainer")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
+        self.horizontalLayout_6.setContentsMargins(120, 100, 120, 100)
+        self.text_overlayContent = QTextBrowser(self.tab_loadingOverlay)
+        self.text_overlayContent.setObjectName(u"text_overlayContent")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.widget_overlayContainer.sizePolicy().hasHeightForWidth())
-        self.widget_overlayContainer.setSizePolicy(sizePolicy)
-        self.horizontalLayout_7 = QHBoxLayout(self.widget_overlayContainer)
-        self.horizontalLayout_7.setSpacing(0)
-        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.text_overlayContent = QTextBrowser(self.widget_overlayContainer)
-        self.text_overlayContent.setObjectName(u"text_overlayContent")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.text_overlayContent.sizePolicy().hasHeightForWidth())
-        self.text_overlayContent.setSizePolicy(sizePolicy1)
+        sizePolicy.setHeightForWidth(self.text_overlayContent.sizePolicy().hasHeightForWidth())
+        self.text_overlayContent.setSizePolicy(sizePolicy)
 
-        self.horizontalLayout_7.addWidget(self.text_overlayContent)
-
-
-        self.horizontalLayout_6.addWidget(self.widget_overlayContainer)
-
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_6.addItem(self.horizontalSpacer_3)
+        self.horizontalLayout_6.addWidget(self.text_overlayContent)
 
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_6)
 
-        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_3.addItem(self.verticalSpacer_5)
-
+        self.verticalLayout_3.setStretch(0, 1)
+        self.verticalLayout_3.setStretch(1, 10)
         self.tabwidget_overlay.addTab(self.tab_loadingOverlay, "")
         self.tab_emptyOverlay = QWidget()
         self.tab_emptyOverlay.setObjectName(u"tab_emptyOverlay")
-        self.horizontalLayout_8 = QHBoxLayout(self.tab_emptyOverlay)
+        self.verticalLayout_5 = QVBoxLayout(self.tab_emptyOverlay)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.horizontalLayout_8 = QHBoxLayout()
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.verticalLayout_4 = QVBoxLayout()
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.btn_addItem = QPushButton(self.tab_emptyOverlay)
         self.btn_addItem.setObjectName(u"btn_addItem")
 
-        self.verticalLayout_4.addWidget(self.btn_addItem)
+        self.horizontalLayout_8.addWidget(self.btn_addItem)
 
         self.btn_removeItem = QPushButton(self.tab_emptyOverlay)
         self.btn_removeItem.setObjectName(u"btn_removeItem")
 
-        self.verticalLayout_4.addWidget(self.btn_removeItem)
+        self.horizontalLayout_8.addWidget(self.btn_removeItem)
 
         self.btn_resetItem = QPushButton(self.tab_emptyOverlay)
         self.btn_resetItem.setObjectName(u"btn_resetItem")
 
-        self.verticalLayout_4.addWidget(self.btn_resetItem)
-
-        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_4.addItem(self.verticalSpacer_6)
+        self.horizontalLayout_8.addWidget(self.btn_resetItem)
 
 
-        self.horizontalLayout_8.addLayout(self.verticalLayout_4)
+        self.verticalLayout_5.addLayout(self.horizontalLayout_8)
 
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
@@ -389,7 +362,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.label_10, 3, 0, 1, 1)
 
 
-        self.horizontalLayout_8.addLayout(self.gridLayout)
+        self.verticalLayout_5.addLayout(self.gridLayout)
 
         self.tabwidget_overlay.addTab(self.tab_emptyOverlay, "")
 
@@ -406,7 +379,7 @@ class Ui_MainWindow(object):
 
         self.sidetab.setCurrentIndex(0)
         self.tabWidget_selectTitleBar.setCurrentIndex(1)
-        self.tabwidget_overlay.setCurrentIndex(1)
+        self.tabwidget_overlay.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -416,7 +389,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.label_appIcon.setText(QCoreApplication.translate("MainWindow", u"[Icon]", None))
         self.label_title.setText(QCoreApplication.translate("MainWindow", u"The QoreWidgets Gallery ", None))
-        self.lineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"This is a fake search bar...", None))
+        self.lineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"A fake search bar...", None))
         self.btn_scrshot.setText("")
         self.btn_settings.setText("")
         self.sidetab.setTabText(self.sidetab.indexOf(self.tab_home), QCoreApplication.translate("MainWindow", u"Home", None))
@@ -437,13 +410,13 @@ class Ui_MainWindow(object):
 "hr { height: 1px; border-width: 0; }\n"
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Noto Sans CJK HK'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Microsoft YaHei UI'; font-size:9pt;\">A simple title bar inherits ImmersiveTitleBarContainer, with a window icon and window title.</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Microsoft YaHei UI'; font-size:9pt;\">The icon and title will follow the"
-                        " changes of windowIcon and windowTitle of current window.</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Microsoft YaHei UI'; font-size:9pt;\">Select this if you only want a title bar that can fit your theme.</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Microsoft YaHei UI'; font-size:9pt;\">For better customization, try the base class ImmersiveTitleBarContainer.</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Microsoft YaHei UI'; font-size:9pt;\"><br /></p></body></html>", None))
+"</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">A simple title bar inherits ImmersiveTitleBarContainer, with a window icon and window title.</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The icon and title will follow the changes of windowIcon and windowTitle of current window.</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-r"
+                        "ight:0px; -qt-block-indent:0; text-indent:0px;\">Select this if you only want a title bar that can fit your theme.</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">For better customization, try the base class ImmersiveTitleBarContainer.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.tabWidget_selectTitleBar.setTabText(self.tabWidget_selectTitleBar.indexOf(self.tab_simple), QCoreApplication.translate("MainWindow", u"ImmersiveTitleBar", None))
         self.textBrowser_2.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
@@ -451,24 +424,22 @@ class Ui_MainWindow(object):
 "hr { height: 1px; border-width: 0; }\n"
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Noto Sans CJK HK'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Microsoft YaHei UI'; font-size:9pt;\">A immersive title bar container with only minimize, maximize and close button. The rest area are left  as a empty layout for developer to put any widget they want.</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-f"
-                        "amily:'Microsoft YaHei UI'; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Microsoft YaHei UI'; font-size:9pt;\">The following actions are supported:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Microsoft YaHei UI'; font-size:9pt;\">- drag to move window</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Microsoft YaHei UI'; font-size:9pt;\">- automatically adjusting margin to reserve space for buttons</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Microsoft YaHei UI'; font-size:9pt;\">- double click to maximize/restore</span></p>\n"
-"<"
-                        "p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Microsoft YaHei UI'; font-size:9pt;\">- restore to normal when dragging at maximized state</span></p></body></html>", None))
+"</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">A immersive title bar container with only minimize, maximize and close button. The rest area are left  as a empty layout for developer to put any widget they want.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0p"
+                        "x; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The following actions are supported:</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- drag to move window</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- automatically adjusting margin to reserve space for buttons</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- double click to maximize/restore</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">- restore to normal when dragging at maximized state</p></body></html>", None))
         self.tabWidget_selectTitleBar.setTabText(self.tabWidget_selectTitleBar.indexOf(self.tab_immersive), QCoreApplication.translate("MainWindow", u"ImmersiveTitleBarContainer", None))
         self.sidetab.setTabText(self.sidetab.indexOf(self.tab_titlebar), QCoreApplication.translate("MainWindow", u"TitleBar", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Wait for a function:", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Loading during a function:", None))
         self.btn_loadingOverlay.setText(QCoreApplication.translate("MainWindow", u"Play", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Or manually:", None))
         self.btn_startOverlay.setText(QCoreApplication.translate("MainWindow", u"Start", None))
         self.btn_stopOverlay.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"The overlay will show on the following widget:", None))
         self.tabwidget_overlay.setTabText(self.tabwidget_overlay.indexOf(self.tab_loadingOverlay), QCoreApplication.translate("MainWindow", u"Loading Overlay", None))
         self.btn_addItem.setText(QCoreApplication.translate("MainWindow", u"Add 1 item", None))
         self.btn_removeItem.setText(QCoreApplication.translate("MainWindow", u"Remove 1 item", None))
