@@ -1,23 +1,12 @@
-
+import os
 
 from PySide6.QtWidgets import QApplication, QMessageBox
 from PySide6.QtGui import QIcon,QStandardItemModel,QStandardItem
 from PySide6.QtCore import QSize, QTimer
 # import qdarktheme
 import rc_assets
-try:
-    import QoreWidgets
-except ImportError:
-    print("QoreWidgets not installed, trying to import from local src")
-    import sys
-    import os
-    # switch to current path
-    curdir=os.path.dirname(os.path.abspath(__file__))
-    # get parent dir
-    sys.path.append(
-        os.path.join(os.path.dirname(curdir) , 'src')
-    )
-    import QoreWidgets
+
+import QoreWidgets # using  `pip install -e .` for development mode
 
 from ui_main import Ui_MainWindow
 
