@@ -25,5 +25,5 @@
     build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]  
-    # enablesetuptools-scm
+    local_scheme = "no-local-version" # required by PyPI/TestPyPI
 
